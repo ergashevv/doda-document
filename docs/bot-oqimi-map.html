@@ -39,6 +39,14 @@
       justify-content: space-between;
       gap: 12px;
       margin-bottom: 18px;
+      position: sticky;
+      top: 12px;
+      z-index: 20;
+      padding: 10px 12px;
+      border: 1px solid rgba(125, 211, 252, 0.18);
+      border-radius: 14px;
+      background: rgba(17, 20, 24, 0.82);
+      backdrop-filter: blur(10px);
     }
     h1 {
       margin: 0;
@@ -109,15 +117,42 @@
       .lang-switch { justify-content: flex-start; }
       .diagram .mermaid { min-width: 860px; }
     }
+
+    .topbar-float {
+      position: fixed;
+      right: 14px;
+      top: 14px;
+      z-index: 30;
+    }
+
+    .topbar-float .lang-switch {
+      background: rgba(17, 20, 24, 0.9);
+      border: 1px solid rgba(125, 211, 252, 0.16);
+      border-radius: 999px;
+      padding: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    @media (max-width: 560px) {
+      .topbar-float {
+        right: 8px;
+        top: 8px;
+      }
+      .topbar-float .lang-switch {
+        padding: 6px;
+      }
+    }
   </style>
 </head>
 <body>
 <div class="page">
   <div class="topbar">
     <h1 id="pageTitle">Bot oqimi</h1>
-    <div class="lang-switch" id="langSwitch"></div>
   </div>
   <div id="content"></div>
+</div>
+<div class="topbar-float">
+  <div class="lang-switch" id="langSwitch"></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
