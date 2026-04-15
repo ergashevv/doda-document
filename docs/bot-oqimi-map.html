@@ -3,379 +3,818 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Botda qanday ketma-ketlik bor?</title>
+  <title>Bot oqimi</title>
   <style>
     :root {
-      --bg: #1e1e1e;
+      --bg: #1b1f24;
+      --bg-2: #111418;
       --fg: #e8e6e3;
       --muted: #9ca3af;
-      --panel: #252526;
-      --border: #3c3c3c;
-      --h2: #7dd3fc;
+      --panel: #23262b;
+      --panel-2: #171a1f;
+      --border: #3c4654;
+      --accent: #7dd3fc;
+      --accent-2: #38bdf8;
     }
     * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
     body {
       margin: 0;
-      padding: 1.25rem 0.75rem 2rem;
+      padding: 18px 14px 28px;
       font-family: "Segoe UI", system-ui, sans-serif;
       font-size: 15px;
       line-height: 1.5;
       color: var(--fg);
-      background: var(--bg);
+      background:
+        radial-gradient(circle at top, rgba(125, 211, 252, 0.09), transparent 26%),
+        linear-gradient(180deg, var(--bg), var(--bg-2));
     }
-    .page { max-width: 52rem; margin: 0 auto; }
+    .page {
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
     h1 {
-      font-size: 1.35rem;
+      margin: 0;
+      font-size: 1.25rem;
       font-weight: 700;
-      margin: 0 0 0.5rem;
+      color: #fff;
+      letter-spacing: 0.2px;
+    }
+    .lang-switch {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .lang-switch button {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #20242a;
+      color: var(--fg);
+      border-radius: 999px;
+      padding: 0.55rem 0.85rem;
+      font: inherit;
+      cursor: pointer;
+      transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+    }
+    .lang-switch button:hover { transform: translateY(-1px); }
+    .lang-switch button.active {
+      border-color: var(--accent);
+      background: rgba(125, 211, 252, 0.12);
       color: #fff;
     }
-    .lead {
-      color: var(--muted);
-      margin: 0 0 1.5rem;
-      font-size: 0.95rem;
-      max-width: 36rem;
+    .section {
+      margin-top: 18px;
     }
-    h2 {
-      font-size: 1rem;
+    .section h2 {
+      margin: 0 0 8px;
+      font-size: 0.98rem;
       font-weight: 600;
-      color: var(--h2);
-      margin: 1.5rem 0 0.6rem;
-      padding-bottom: 0.35rem;
-      border-bottom: 1px solid var(--border);
+      color: var(--accent);
+      letter-spacing: 0.15px;
     }
     .diagram {
-      background: var(--panel);
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 0.85rem;
-      margin: 0 0 0.5rem;
+      border-radius: 14px;
+      padding: 12px;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }
     .diagram .mermaid {
+      min-width: 1360px;
       text-align: center;
-      min-width: 1320px;
     }
-    .hint {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin: 0 0 1.25rem;
-      max-width: 40rem;
+    .small-gap { margin-top: 10px; }
+    @media (max-width: 1080px) {
+      body { padding: 14px 10px 22px; }
+      .diagram .mermaid { min-width: 1160px; }
     }
-
-    @media (max-width: 1024px) {
-      body {
-        padding: 1rem 0.65rem 1.6rem;
-      }
-
-      .diagram .mermaid {
-        min-width: 1160px;
-      }
+    @media (max-width: 780px) {
+      body { padding: 12px 8px 18px; font-size: 14px; }
+      h1 { font-size: 1.08rem; }
+      .diagram { padding: 10px; border-radius: 12px; }
+      .diagram .mermaid { min-width: 1020px; }
     }
-
-    @media (max-width: 768px) {
-      body {
-        padding: 0.9rem 0.5rem 1.2rem;
-        font-size: 14px;
-      }
-
-      h1 {
-        font-size: 1.2rem;
-      }
-
-      h2 {
-        font-size: 0.98rem;
-        margin-top: 1.25rem;
-      }
-
-      .diagram {
-        padding: 0.7rem;
-        border-radius: 12px;
-      }
-
-      .diagram .mermaid {
-        min-width: 1000px;
-      }
-    }
-
-    @media (max-width: 540px) {
-      body {
-        padding: 0.75rem 0.4rem 1rem;
-        font-size: 13px;
-      }
-
-      .lead,
-      .hint {
-        font-size: 0.8rem;
-      }
-
-      .diagram {
-        padding: 0.6rem;
-      }
-
-      .diagram .mermaid {
-        min-width: 860px;
-      }
+    @media (max-width: 560px) {
+      body { padding: 10px 6px 16px; font-size: 13px; }
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .lang-switch { justify-content: flex-start; }
+      .diagram .mermaid { min-width: 860px; }
     }
   </style>
 </head>
 <body>
 <div class="page">
-
-<h1>Bot oqimi / Поток бота</h1>
-<p class="lead">Chizmadagi strelkalar botdagi haqiqiy savollar ketma-ketligini ko‘rsatadi. Sarlavhalar UZ / RU da berilgan.</p>
-
-<h2>1. Boshlanish / Начало</h2>
-<div class="diagram">
-<pre class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": { "fontSize": "14px" }}}%%
-flowchart TB
-  A([/start]) --> B[Tilni tanlaysiz / Выбираете язык]
-  B --> C[Telefon raqamini yuborasiz / Отправляете номер]
-  C --> D[Asosiy menyu / Главное меню]
-  D --> E{Qaysi tugma? / Какая кнопка?}
-  E -->|😎| F[Men parkdaman / Я в парке]
-  E -->|🙏| G[Parkga ulanmoqchiman / Хочу подключиться]
-  E -->|❓| H[Texnik yordam / Техподдержка]
-  H --> I[Muammoni yozasiz / Пишете проблему]
-  I --> D
-</pre>
-</div>
-
-<h2>2. Parkdagi savollar / Вопросы в парке</h2>
-<div class="diagram">
-<pre class="mermaid">
-%%{init: {"theme": "dark"}}%%
-flowchart TB
-  A[Asosiy menyu / Главное меню] --> B[Savollar ro‘yxati / Список вопросов]
-  B --> C[Bir savolni bosasiz / Нажимаете вопрос]
-  C --> B
-  B --> D[⬅ Orqaga / Назад]
-  D --> A
-</pre>
-</div>
-
-<h2>3. Ulanish yo‘li / Путь подключения</h2>
-<div class="diagram">
-<pre class="mermaid">
-%%{init: {"theme": "dark"}}%%
-flowchart TB
-  A[Parkga ulanmoqchiman / Хочу подключиться] --> B[Xizmatni tanlaysiz / Выбираете сервис]
-  B --> C[Doda kuryer / Doda курьер]
-  B --> D[Yandex Lavka / Яндекс Лавка]
-  B --> E[Yandex Eda / Яндекс Еда]
-</pre>
-</div>
-
-<h2>4. Doda / Дода</h2>
-<div class="diagram">
-<pre class="mermaid">
-%%{init: {"theme": "dark"}}%%
-flowchart TB
-  A[Transportni tanlaysiz / Выбираете транспорт] --> C[🚗 Yengil avtomobil / Легковая]
-  A --> T[🚚 Yuk mashinasi / Грузовая]
-  A --> M[🏍 Mototransport / Мото]
-  A --> B[🚲 Velosiped / Велосипед]
-  A --> F[🚶 Piyoda / Пешком]
-</pre>
-</div>
-
-<div class="diagram">
-<pre class="mermaid">
-%%{init: {"theme": "dark"}}%%
-flowchart TB
-  A{Fuqarolik rf/kg/kz? / Гражданство rf/kg/kz?}
-  A -->|ha| B[O‘zini o‘zi band qilganmisiz? / Самозанятый?]
-  A -->|yo‘q| D[Mashina Rossiyada ro‘yxatdan o‘tganmi? / Машина в РФ?]
-  B -->|ha| C[Ro‘yxatdan o‘tganlik / Регистрация]
-  B -->|yo‘q| D
-  C --> E[Moy nalog telefoni / Телефон Мой налог]
-  E --> D
-  D -->|ha| L[Prava / ВУ] --> S[STS]
-  D -->|yo‘q| L --> P[Texnik pasport old / Техпаспорт лицевая]
-  P --> Q[Texnik pasport orqa / Техпаспорт оборот]
-  S --> X{Yuk mashinasi? / Грузовая?}
-  Q --> X
-  X -->|ha| Y[Gabarit] --> Z[Yuk ko‘tarish / Грузоподъемность] --> W[Bezash / Оклейка]
-  X -->|yo‘q| N[Pasport old / Паспорт лицевая]
-  W --> N
-  N --> O[Pasport orqa / Паспорт оборот]
-</pre>
-</div>
-
-<div class="diagram">
-<pre class="mermaid">
-%%{init: {"theme": "dark"}}%%
-flowchart TB
-  A{Fuqarolik rf/kg/kz? / Гражданство rf/kg/kz?}
-  A -->|ha| B[O‘zini o‘zi band qilganmisiz? / Самозанятый?]
-  A -->|yo‘q| D[Prava / ВУ]
-  B -->|ha| C[Ro‘yxatdan o‘tganlik / Регистрация]
-  B -->|yo‘q| D
-  C --> E[Moy nalog telefoni / Телефон Мой налог]
-  E --> D
-  D --> F[Pasport old / Паспорт лицевая]
-  F --> G[Pasport orqa / Паспорт оборот]
-</pre>
-</div>
-
-<div class="diagram">
-<pre class="mermaid">
-%%{init: {"theme": "dark"}}%%
-flowchart TB
-  A{Fuqarolik rf/kg/kz? / Гражданство rf/kg/kz?}
-  A -->|ha| B[O‘zini o‘zi band qilganmisiz? / Самозанятый?]
-  A -->|yo‘q| D[Pasport old / Паспорт лицевая]
-  B -->|ha| C[Ro‘yxatdan o‘tganlik / Регистрация]
-  B -->|yo‘q| D
-  C --> E[Moy nalog telefoni / Телефон Мой налог]
-  E --> D
-  D --> F[Pasport orqa / Паспорт оборот]
-</pre>
-</div>
-
-<p class="hint">Yengil avtomobil va yuk mashinasi bir xil boshlanadi, lekin yuk mashinasida qo‘shimcha uchta qadam bor. Moto, velosiped va piyoda alohida ko‘rsatilgan.</p>
-
-<div class="diagram">
-<pre class="mermaid">
-%%{init: {"theme": "dark"}}%%
-flowchart LR
-  A[Hammasini ko‘rib chiqasiz / Проверяете всё] --> B[✅ Yuborish / Отправить]
-  B --> C[Menejer tayyorlaydi / Менеджер tayyorlaydi]
-</pre>
-</div>
-
-<h2>5. Lavka va Yandex Eda / Лавка и Яндекс Еда</h2>
-<div class="diagram">
-<pre class="mermaid">
-%%{init: {"theme": "dark"}}%%
-flowchart TB
-  A[Servis / Сервис] --> B[Yandex Lavka / Яндекс Лавка]
-  A --> C[Yandex Eda / Яндекс Еда]
-  B --> D[Shahar / Город]
-  C --> D
-  D --> E[Mamlakat / Страна]
-</pre>
-</div>
-
-<div class="diagram">
-<pre class="mermaid">
-%%{init: {"theme": "dark"}}%%
-flowchart TB
-  A[O‘zbekiston / Tojikiston] --> B[Pasport oldi / Паспорт лицевая]
-  B --> C[Hujjat turi / Тип документа]
-  C -->|Patent| P1[Patent]
-  C -->|VNZH| V1[VNZH]
-  C -->|Talaba| S1[Talaba]
-  P1 --> P2[Pasport orqa / Паспорт оборот]
-  P2 --> R{Registratsiya yoki Amina? / Регистрация или Амина?}
-  R -->|Registratsiya| R1[Registratsiya old]
-  R -->|Amina| R2[Amina]
-  R1 --> M[Migratsiya]
-  R2 --> M
-  M --> T{Telefon kerakmi? / Нужен телефон?}
-  T -->|ha| U[Telefon]
-  T -->|yo‘q| K[Rekvizit matni / Реквизиты]
-  U --> K
-  K --> N[16 raqamli karta / 16 цифр]
-  V1 --> V2[Pasport old / Паспорт лицевая]
-  V2 --> V3[Pasport orqa / Паспорт оборот]
-  V3 --> I[INN]
-  I --> S[SNILS]
-  S --> M2[Migratsiya]
-  M2 --> T2{Telefon kerakmi? / Нужен телефон?}
-  T2 -->|ha| U2[Telefon]
-  T2 -->|yo‘q| K2[Rekvizit matni / Реквизиты]
-  U2 --> K2
-  K2 --> N2[16 raqamli karta / 16 цифр]
-  S1 --> ST1[Talaba bileti]
-  ST1 --> ST2[O‘qish spravkasi]
-  ST2 --> R3{Registratsiya yoki Amina? / Регистрация или Амина?}
-  R3 -->|Registratsiya| SR1[Registratsiya old]
-  R3 -->|Amina| SA1[Amina]
-  SR1 --> SM[Migratsiya]
-  SA1 --> SM
-  SM --> SK[Rekvizitlar]
-  SK --> SN[16 raqamli karta / 16 цифр]
-</pre>
-</div>
-
-<div class="diagram">
-<pre class="mermaid">
-%%{init: {"theme": "dark"}}%%
-flowchart TB
-  A[Qozog‘iston / Qirg‘iziston] --> B[Pasport yoki ID / Паспорт или ID]
-  B --> C[Migratsiya]
-  C --> D{Registratsiya yoki Amina? / Регистрация или Амина?}
-  D -->|Registratsiya| E[Registratsiya old]
-  D -->|Amina| F[Amina]
-  E --> G[16 raqamli karta / 16 цифр]
-  F --> G
-</pre>
-</div>
-
-<div class="diagram">
-<pre class="mermaid">
-%%{init: {"theme": "dark"}}%%
-flowchart TB
-  A[RF / Boshqa davlat] --> B[Pasport oldi / Паспорт лицевая]
-  B --> C[Pasport ro‘yxati / Прописка]
-  C --> D[Rekvizit matni / Реквизиты]
-  D --> E[16 raqamli karta / 16 цифр]
-</pre>
-</div>
-
-<div class="diagram">
-<pre class="mermaid">
-%%{init: {"theme": "dark"}}%%
-flowchart TB
-  A[Turkmaniston] --> B{Viza turi / Тип визы?}
-  B -->|Ish / Рабочая| C[Viza]
-  B -->|O‘qish / Учебная| D[Student yo‘li]
-  B -->|Turizm / Туризм| E[Hozir yopiq / Сейчас закрыто]
-  C --> F[Amina yoki registratsiya]
-  F --> G[Migratsiya]
-  G --> H{Telefon kerakmi? / Нужен телефон?}
-  H -->|ha| I[Telefon]
-  H -->|yo‘q| J[Rekvizit matni / Реквизиты]
-  I --> J
-  J --> K[16 raqamli karta / 16 цифр]
-  D --> D1[Turkman talaba yo‘li]
-  D1 --> D2[Student bileti]
-  D2 --> D3[Spravka]
-  D3 --> D4[Amina yoki registratsiya]
-  D4 --> D5[Migratsiya]
-  D5 --> D6{Telefon kerakmi? / Нужен телефон?}
-  D6 -->|ha| D7[Telefon]
-  D6 -->|yo‘q| D8[Rekvizit matni / Реквизиты]
-  D7 --> D8
-  D8 --> D9[16 raqamli karta / 16 цифр]
-</pre>
-</div>
-
-<p class="hint" style="margin-top:1.5rem; opacity:0.75;">Agar yozuv kichik ko‘rinsa, chizma ustida chap-o‘ng siljiting. Bu sahifada UZ / RU ko‘rsatilgan; bot ichida yana boshqa tillar ham bor.</p>
-
+  <div class="topbar">
+    <h1 id="pageTitle">Bot oqimi</h1>
+    <div class="lang-switch" id="langSwitch"></div>
+  </div>
+  <div id="content"></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <script>
-  const compact = window.matchMedia("(max-width: 768px)").matches;
-  const small = window.matchMedia("(max-width: 540px)").matches;
-  mermaid.initialize({
-    startOnLoad: true,
-    theme: "dark",
-    securityLevel: "loose",
-    themeVariables: {
-      fontSize: small ? "12px" : compact ? "13px" : "14px",
+  const STORAGE_KEY = "bot-flow-lang";
+  const LANGS = ["uz", "ru"];
+
+  const TEXT = {
+    uz: {
+      pageTitle: "Bot oqimi",
+      langBtnUz: "🇺🇿 O‘zbek",
+      langBtnRu: "🇷🇺 Русский",
+      pick_language: "Tilni tanlang:",
+      main_menu_after_faq: "Asosiy menyu:",
+      faq_intro: "Parkdasan — savolni tanla:",
+      faq_back: "◀️ Orqaga",
+      btn_in_park: "😎 Doda parkida ishlayman",
+      btn_not_in_park: "🙏 Doda parkiga ulanmoqchiman",
+      btn_support: "❓ Texnik yordam",
+      support: "Texnik yordam: muammoni yozing (telefon, nima bo'lgan).",
+      ask_phone: "📱 Rossiya raqamini yozing: +7... yoki raqamni yuborging.",
+      btn_phone_from_telegram: "Telefon raqamimni yuborish",
+      btn_phone_manual: "Raqamni o'zim yozaman",
+      ask_service: "Qaysi servisni tanlamoqchisiz?",
+      yx_btn_doda: "Doda kuryer",
+      yx_btn_lavka: "Yandex Lavka",
+      yx_btn_eats: "Yandex Eda",
+      ask_category: "Qaysi kategoriyada ishlashni xohlaysiz?",
+      cat_car: "🚗 Yengil avtomobil",
+      cat_truck: "🚚 Yuk mashinasi",
+      cat_moto: "🏍️ Mototransport",
+      cat_bike: "🚲 Velosiped",
+      cat_foot: "🚶 Piyoda",
+      ask_city: "Qaysi shaharda ishlaysiz?",
+      city_other_btn: "✏️ Boshqa shahar (matn)",
+      ask_citizenship_car: "Haydovchi fuqaroligini tanlang:",
+      ask_citizenship_other: "Fuqaroligingizni tanlang:",
+      cit_uz: "O'zbekiston",
+      cit_tj: "Tojikiston",
+      cit_kg: "Qirg'iziston",
+      cit_kz: "Qozog'iston",
+      cit_rf: "Rossiya",
+      cit_tm: "Turkmaniston",
+      ask_self_employed_car: "O'zini o'zi band qilganmisiz (SMZ)?",
+      ask_self_employed_other: "O'zini o'zi band qilganmisiz?",
+      confirm_category_car: (label) => `Tanlangan kategoriya: ${label}`,
+      confirm_category_other: (label) => `Tanlangan kategoriya: ${label}`,
+      confirm_city: (city) => `Tanlangan shahar: ${city}`,
+      confirm_citizenship: (label) => `Fuqarolik: ${label}`,
+      confirm_self_employed: (yes) => `O'zini o'zi band qilgan: ${yes ? "Ha" : "Yo'q"}`,
+      btn_vehicle_rf_sts: "Rossiyada ro'yxatdan o'tgan",
+      btn_vehicle_foreign_tech: "Chet eldan ro'yxatdan o'tgan",
+      ask_vehicle_rf: "Transport qayerda ro'yxatdan o'tgan?",
+      confirm_vehicle_rf: (rf) => rf ? "Rossiyada ro'yxatdan o'tgan" : "Chet eldan ro'yxatdan o'tgan",
+      btn_continue: "Davom etish 👉",
+      ask_license_front: "Haydovchilik guvohnomangizni (prava) old tomonini rasmga tushirib yuboring.",
+      confirm_license_uploaded: "✅ Guvohnoma (prava) qabul qilindi\n\nYaxshi ko'rinayotganini tekshiring va «Davom etish 👉»ni bosing.",
+      ask_sts_front: "Texpasportingizni (asosiy betini) rasmga tushirib yuboring.",
+      ask_tech_passport_front: "Chet el texpasportining old tomonini rasmga tushirib yuboring.",
+      ask_tech_passport_back: "Chet el texpasportining orqa tomonini rasmga tushirib yuboring.",
+      confirm_sts_uploaded: "✅ Texpasport qabul qilindi\n\n«Davom etish 👉»ni bosing.",
+      confirm_tech_passport_front: "✅ Texpasport (old) qabul qilindi\n\n«Davom etish 👉»ni bosing.",
+      confirm_tech_passport_back: "✅ Texpasport (orqa) qabul qilindi\n\n«Davom etish 👉»ni bosing.",
+      ask_reg_amina: "Ro'yxatdan o'tganlik (registratsiya) hujjati rasmini yuboring:",
+      confirm_reg_amina_uploaded: "✅ Hujjat qabul qilindi.",
+      ask_moy_nalog_phone: "Moy nalog raqamini kiriting.",
+      confirm_moy_nalog_phone: (ph) => `Moy nalog telefoni: ${ph}`,
+      ask_truck_dimensions: "Yuk bo'limining o'lchamlarini tanlang (uzunlik/kenglik/balandlik)",
+      truck_dim_btn_S: "S - 170×100×90 sm dan.",
+      truck_dim_btn_M: "M - 260×130×150 sm dan.",
+      truck_dim_btn_L: "L - 380×180×180 sm dan.",
+      truck_dim_btn_XL: "XL - 400×190×200 sm dan.",
+      truck_dim_btn_XXL: "XXL - 500×200×200 sm dan.",
+      ask_truck_payload: "Yuk ko'taruvchanligini kg da yozing.",
+      ask_truck_branding: "Avtomobilda brending (yopish) bormi?",
+      confirm_truck_dimensions: (label) => `Tanlangan o'lcham: ${label}`,
+      confirm_truck_payload: (kg) => `Yuk ko'taruvchanligi: ${new Intl.NumberFormat("uz-UZ").format(kg)}`,
+      confirm_truck_branding: (yes) => `Avtomobilda brending: ${yes ? "Ha" : "Yo'q"}`,
+      ask_passport_front: "Pasportingizning rasm bor sahifasini rasmga tushirib yuboring.",
+      ask_passport_back: "Pasportingizning propiska bor sahifasini rasmga tushirib yuboring.",
+      confirm_passport_front_uploaded: "✅ Pasport (foto) qabul qilindi.\n\n«Davom etish 👉»ni bosing.",
+      confirm_passport_back_uploaded: "✅ Pasport (propiska) qabul qilindi.\n\n«Davom etish 👉»ni bosing.",
+      ask_thermal: "Termokorob bormi?",
+      btn_therm_yes: "Ha",
+      btn_therm_no: "Yo'q, sotib olish kerak",
+      confirm_thermal: (yes) => `Termokorob: ${yes ? "Ha" : "Yo'q, sotib olish kerak"}`,
+      review_hint: "👆 Ma'lumotlar tayyor. «✅ Yuborish»ni bosing yoki maydonni tahrirlang.",
+      submit_btn: "✅ Yuborish",
+      final_wait_intro: "Ajoyib! Menejerlar akkauntingizni tayyorlamoqda — taxminan 20 daqiqa 👌",
+      final_wait_community: "Hozircha shahringiz bo'yicha Doda taxi jamoasiga qo'shiling: {link}",
+      yx_ask_city: "Qayerda ishlashni xohlaysiz — Moskva (MSK) yoki Moskva viloyati? Pastdagi tugmalar bilan tanlang.",
+      yx_city_msk: "Moskva",
+      yx_city_mo: "Moskva viloyati",
+      yx_city_other: "Boshqa",
+      yx_city_other_blocked: "Uzr, biz shu Moscow va oblastdan boshqalariga hozircha boglab hizmat korsatolmaymiz.",
+      yx_ask_citizen: "Fuqaroligingizni tanlang.",
+      yx_cit_uz: "O'zbekiston",
+      yx_cit_tj: "Tojikiston",
+      yx_cit_kz: "Qozog'iston",
+      yx_cit_kg: "Qirg'iziston",
+      yx_cit_other: "Yoki boshqa",
+      yx_cit_uz_tj: "O'zbekiston / Tojikiston",
+      yx_cit_kz_kg: "Qozog'iston / Qirg'iziston",
+      yx_cit_rf: "RF fuqarosi",
+      yx_cit_tm: "Turkmaniston",
+      yx_ask_uz_doc: "Hujjat turini tanlang.",
+      yx_doc_patent: "Patent",
+      yx_doc_vnzh: "VNJ / RVP",
+      yx_doc_student: "Talaba",
+      yx_p_uz_pre_pass_f: "Pasportingizning rasm bor sahifasini yuboring.",
+      yx_p_uz_pre_pass_b: "Pasportingizning propiska (yashash joyi) sahifasini yuboring.",
+      yx_p_uz_pat_front: "Patent rasmi — old tomoni.",
+      yx_p_uz_pat_back: "Patent rasmi — orqa tomoni.",
+      yx_p_reg_f: "Propiska (registratsiya) rasmi — old tomoni.",
+      yx_p_reg_b: "Propiska (registratsiya) rasmi — orqa tomoni.",
+      yx_p_amina: "«Amina» hujjati rasmi.",
+      yx_p_mig: "Migratsiya kartasi rasmi.",
+      yx_p_req_text: "Bank rekvizitlarini bitta matn xabari, surat yoki fayl (PDF va h.k.) bilan yuboring (servis yo'riqnomasiga ko'ra).",
+      yx_p_card16: "Bank karta raqamini kiriting — ketma-ket 16 raqam (bo'shliq bilan ham mumkin).",
+      yx_p_vnzh_f: "VNJ / RVP rasmi — old tomoni.",
+      yx_p_vnzh_b: "VNJ / RVP rasmi — orqa tomoni.",
+      yx_p_inn: "INN ni kiriting — 10 yoki 12 raqam (faqat raqamlar).",
+      yx_p_snils: "SNILS ni kiriting — 11 raqam (defislar ixtiyoriy).",
+      yx_p_st_bilet: "Talabalik guvohnomasi rasmi.",
+      yx_p_st_spravka: "O'qish joyidan ma'lumotnoma rasmi.",
+      yx_p_kz_pass_face: "Pasport rasmi (rasmli sahifasi).",
+      yx_p_kz_id_f: "ID karta (shaxsiy guvohnoma) — old tomoni.",
+      yx_p_kz_id_b: "ID karta (shaxsiy guvohnoma) — orqa tomoni.",
+      yx_kz_pass: "Pasport",
+      yx_kz_id: "ID (shaxs guvohnomasi)",
+      yx_p_rf_pass_face: "Rossiya pasporti rasmi (rasmli sahifa).",
+      yx_p_rf_pass_prop: "Propiska sahifasi rasmi.",
+      yx_p_other_pass_face: "Pasport rasmi (rasmli sahifa).",
+      yx_p_other_pass_prop: "Propiska yoki yashash joyi sahifasi rasmi.",
+      yx_p_tm_visa: "Viza rasmini yuboring.",
+      yx_p_tm_amina_or_reg: "«Amina» hujjati yoki qog'oz propiska (registratsiya) rasmi.",
+      yx_ask_tm_visa: "Viza turini tanlang (ishchi, turizm yoki o‘qish vizasi).",
+      yx_tm_work: "Ishchi viza",
+      yx_tm_tourism: "Turizm viza",
+      yx_tm_study: "O‘qish vizasi",
+      yx_tm_tourism_blocked: "Turizm vizasi bilan hozircha ulab bera olmaymiz. Faqat ishchi viza bilan to'liq ro'yxatdan o'tish mumkin. «Ishchi viza»ni tanlang.",
+      yx_p_contact_phone: "Kontakt telefon raqamini kiriting (RF).",
+      yx_review_hint: "Ma'lumotlarni tekshiring. Yuborish uchun «✅ Yuborish»ni bosing.",
+      yx_review_fix_btn: "📝 Hujjatni tuzatish",
+      yx_review_pick_title: "Qaysi qadam noto‘g‘ri? Pastdan tanlang.",
+      yx_review_fix_note: "Faqat tanlangan qadam qayta so‘raladi — avval kiritilgan keyingi ma’lumotlar saqlanadi.",
+      yx_final_thanks: "Ma'lumotlarni yuborganingiz uchun rahmat. Ariza qabul qilindi, tez orada siz bilan bog'lanamiz.",
+      yx_btn_review_send: "✅ Yuborish",
     },
-    flowchart: {
-      curve: "basis",
-      padding: small ? 8 : compact ? 9 : 10,
-      nodeSpacing: small ? 20 : compact ? 26 : 32,
-      rankSpacing: small ? 34 : compact ? 40 : 44,
+    ru: {
+      pageTitle: "Поток бота",
+      langBtnUz: "🇺🇿 O‘zbek",
+      langBtnRu: "🇷🇺 Русский",
+      pick_language: "Выберите язык:",
+      main_menu_after_faq: "Главное меню:",
+      faq_intro: "Раздел для тех, кто уже в парке Doda taxi — выбери вопрос:",
+      faq_back: "◀️ В главное меню",
+      btn_in_park: "😎 Я уже в парке DODA",
+      btn_not_in_park: "🙏 Я не в парке DODA, нужно подключить",
+      btn_support: "❓ Нужна помощь техподдержки",
+      support: "Техподдержка: опишите проблему (телефон, что случилось).",
+      ask_phone: "📱 Укажи российский номер для заявки: +7… (10 цифр после 7), или 8…, или 10 цифр без кода. Можно отправить контакт 📎 (только РФ).",
+      btn_phone_from_telegram: "Отправить номер телефона",
+      btn_phone_manual: "Ввести самостоятельно",
+      ask_service: "К какому сервису вы хотите подключиться?",
+      yx_btn_doda: "Doda курьер",
+      yx_btn_lavka: "Yandex Lavka",
+      yx_btn_eats: "Yandex Eda",
+      ask_category: "В какой категории планируешь выполнять заказы?",
+      cat_car: "🚗 Легковое авто",
+      cat_truck: "🚚 Грузовое авто",
+      cat_moto: "🏍️ Мототранспорт",
+      cat_bike: "🚲 Велосипед",
+      cat_foot: "🚶 Пешая доставка",
+      ask_city: "В каком городе будешь выполнять заказы?",
+      city_other_btn: "✏️ Другой город (текст)",
+      ask_citizenship_car: "Выберите гражданство водителя:",
+      ask_citizenship_other: "Выберите ваше гражданство:",
+      cit_uz: "Узбекистан",
+      cit_tj: "Таджикистан",
+      cit_kg: "Кыргызстан",
+      cit_kz: "Казахстан",
+      cit_rf: "Россия",
+      cit_tm: "Туркменистан",
+      ask_self_employed_car: "С самозанятостью (СМЗ) или без?",
+      ask_self_employed_other: "Являетесь ли вы самозанятым?",
+      confirm_category_car: (label) => `Категория: ${label}`,
+      confirm_category_other: (label) => `Категория: ${label}`,
+      confirm_city: (city) => `Город: ${city}`,
+      confirm_citizenship: (label) => `Гражданство: ${label}`,
+      confirm_self_employed: (yes) => `Самозанятость: ${yes ? "Да" : "Нет"}`,
+      btn_vehicle_rf_sts: "Россия",
+      btn_vehicle_foreign_tech: "Иностранное",
+      ask_vehicle_rf: "Где зарегистрирован транспорт?",
+      confirm_vehicle_rf: (rf) => rf ? "Учёт в РФ" : "Иностранное ТС",
+      btn_continue: "Продолжить 👉",
+      ask_license_front: "Отправь фото водительского удостоверения (права) лицевой стороны.",
+      confirm_license_uploaded: "✅ ВУ принято\n\nПроверь фото и нажмите «Продолжить 👉».",
+      ask_sts_front: "Отправь фото СТС (основная страница).",
+      ask_tech_passport_front: "Отправь фото передней стороны техпаспорта.",
+      ask_tech_passport_back: "Отправь фото задней стороны техпаспорта.",
+      confirm_sts_uploaded: "✅ СТС принят\n\nНажмите «Продолжить 👉».",
+      confirm_tech_passport_front: "✅ Техпаспорт (лицо) принят\n\nНажмите «Продолжить 👉».",
+      confirm_tech_passport_back: "✅ Техпаспорт (оборот) принят\n\nНажмите «Продолжить 👉».",
+      ask_reg_amina: "Отправьте фото регистрации или Амины:",
+      confirm_reg_amina_uploaded: "✅ Документ принят.",
+      ask_moy_nalog_phone: "Напишите номер «Мой налог».",
+      confirm_moy_nalog_phone: (ph) => `Телефон «Мой налог»: ${ph}`,
+      ask_truck_dimensions: "Выберите габариты грузового отсека.",
+      truck_dim_btn_S: "S - от 170х100х90 см.",
+      truck_dim_btn_M: "M - от 260х130х150 см.",
+      truck_dim_btn_L: "L - от 380х180х180 см.",
+      truck_dim_btn_XL: "XL - от 400х190х200 см.",
+      truck_dim_btn_XXL: "XXL - от 500х200х200 см.",
+      ask_truck_payload: "Укажите грузоподъемность в кг.",
+      ask_truck_branding: "Есть ли у авто оклейка (брендинг) кузова?",
+      confirm_truck_dimensions: (label) => `Вы указали габариты авто: ${label}`,
+      confirm_truck_payload: (kg) => `Вы указали грузоподъемность: ${new Intl.NumberFormat("ru-RU").format(kg)}`,
+      confirm_truck_branding: (yes) => `Вы указали наличие оклейки: ${yes ? "Да" : "Нет"}`,
+      ask_passport_front: "Отправь фото разворота паспорта (страница с фото)",
+      ask_passport_back: "Отправь фото паспорта (страница с регистрацией)",
+      confirm_passport_front_uploaded: "✅ Паспорт (фото) принят.\n\nНажмите «Продолжить 👉».",
+      confirm_passport_back_uploaded: "✅ Паспорт (прописка) принят.\n\nНажмите «Продолжить 👉».",
+      ask_thermal: "У тебя есть термокороб?",
+      btn_therm_yes: "Да",
+      btn_therm_no: "Нет, необходимо приобрести",
+      confirm_thermal: (yes) => `Термокороб: ${yes ? "Да" : "Нет, необходимо приобрести"}`,
+      review_hint: "👆 Данные готовы. Нажмите «✅ Отправить» или исправьте поле.",
+      submit_btn: "✅ Отправить",
+      final_wait_intro: "Отлично! Менеджеры готовят ваш аккаунт — примерно 20 минут 👌",
+      final_wait_community: "Пока присоединяйтесь к Doda taxi команде по вашему городу: {link}",
+      yx_ask_city: "Где вы хотите работать? Москва (MSK) или Московская область? Выберите кнопкой ниже.",
+      yx_city_msk: "Москва",
+      yx_city_mo: "Московская область",
+      yx_city_other: "Другой",
+      yx_city_other_blocked: "Извините, мы пока не можем подключить к сервису в других регионах, кроме Москвы и области.",
+      yx_ask_citizen: "Укажите ваш статус / гражданство кнопкой ниже.",
+      yx_cit_uz: "Узбекистан",
+      yx_cit_tj: "Таджикистан",
+      yx_cit_kz: "Казахстан",
+      yx_cit_kg: "Кыргызстан",
+      yx_cit_other: "Или другое",
+      yx_cit_uz_tj: "Узбекистан / Таджикистан",
+      yx_cit_kz_kg: "Казахстан / Кыргызстан",
+      yx_cit_rf: "Гражданин РФ",
+      yx_cit_tm: "Туркменистан",
+      yx_ask_uz_doc: "Выберите тип подтверждающего документа.",
+      yx_doc_patent: "Патент",
+      yx_doc_vnzh: "ВНЖ / РВП",
+      yx_doc_student: "Студент",
+      yx_p_uz_pre_pass_f: "Фото паспорта (разворот с фото).",
+      yx_p_uz_pre_pass_b: "Фото паспорта — страница с пропиской или следующий разворот.",
+      yx_p_uz_pat_front: "Фото патента — лицевая сторона.",
+      yx_p_uz_pat_back: "Фото патента — оборот.",
+      yx_p_reg_f: "Фото регистрации — лицевая сторона.",
+      yx_p_reg_b: "Фото регистрации — оборот.",
+      yx_p_amina: "Фото документа «Амина».",
+      yx_p_mig: "Фото миграционной карты.",
+      yx_p_req_text: "Отправьте банковские реквизиты одним текстом, фото или файлом (PDF и др.) — как в инструкции сервиса.",
+      yx_p_card16: "Введите номер банковской карты — 16 цифр подряд (можно с пробелами).",
+      yx_p_vnzh_f: "Фото ВНЖ / РВП — лицевая сторона.",
+      yx_p_vnzh_b: "Фото ВНЖ / РВП — оборот.",
+      yx_p_inn: "Введите ИНН — 10 или 12 цифр.",
+      yx_p_snils: "Введите СНИЛС — 11 цифр (можно с дефисами).",
+      yx_p_st_bilet: "Фото студенческого билета.",
+      yx_p_st_spravka: "Фото справки с места учёбы.",
+      yx_p_kz_pass_face: "Фото паспорта (разворот с фото).",
+      yx_p_kz_id_f: "Фото удостоверения личности — лицевая сторона.",
+      yx_p_kz_id_b: "Фото удостоверения личности — оборот.",
+      yx_kz_pass: "Паспорт",
+      yx_kz_id: "Удостоверение личности (ID)",
+      yx_p_rf_pass_face: "Фото паспорта РФ (разворот с фото).",
+      yx_p_rf_pass_prop: "Фото страницы с пропиской.",
+      yx_p_other_pass_face: "Фото паспорта (разворот с фото).",
+      yx_p_other_pass_prop: "Фото страницы с регистрацией / пропиской.",
+      yx_p_tm_visa: "Отправьте фото визы / разрешения (тип выбран на предыдущем шаге).",
+      yx_p_tm_amina_or_reg: "Скриншот «Амина» или фото/скан бумажной регистрации — одно фото или PDF.",
+      yx_ask_tm_visa: "Какой тип визы? Выберите кнопкой ниже: туристическая, рабочая или учебная.",
+      yx_tm_work: "Рабочая виза",
+      yx_tm_tourism: "Туристическая виза",
+      yx_tm_study: "Учебная виза",
+      yx_tm_tourism_blocked: "С туристической визой сейчас подключить не можем — полное оформление только с рабочей визой. Выберите «Рабочая виза».",
+      yx_p_contact_phone: "Укажите контактный номер телефона (РФ).",
+      yx_review_hint: "Проверьте данные. Для отправки нажмите «✅ Отправить».",
+      yx_review_fix_btn: "📝 Исправить документ",
+      yx_review_pick_title: "Какой шаг перезагрузить? Выберите ниже.",
+      yx_review_fix_note: "Перезагрузится только выбранный шаг — уже введённые следующие данные сохранятся.",
+      yx_final_thanks: "Благодарим за предоставленные сведения. Заявка принята; мы свяжемся с вами в ближайшее время.",
+      yx_btn_review_send: "✅ Отправить",
     },
-  });
+  };
+
+  function currentLang() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (LANGS.includes(saved)) return saved;
+    return "uz";
+  }
+
+  function setLang(lang) {
+    localStorage.setItem(STORAGE_KEY, lang);
+    render();
+  }
+
+  function esc(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function section(title, diagram) {
+    return `
+      <section class="section">
+        <h2>${esc(title)}</h2>
+        <div class="diagram"><pre class="mermaid">${diagram}</pre></div>
+      </section>`;
+  }
+
+  function startDiagram(s) {
+    return `%%{init: {"theme": "dark", "themeVariables": { "fontSize": "14px" }}}%%
+flowchart TB
+  A([/start]) --> B[${esc(s.pick_language)}]
+  B --> C[${esc(s.ask_phone)}]
+  C --> D[${esc(s.main_menu_after_faq)}]
+  D --> E[${esc(s.btn_in_park)}]
+  D --> F[${esc(s.btn_not_in_park)}]
+  D --> G[${esc(s.btn_support)}]
+  G --> H[${esc(s.support)}]`;
+  }
+
+  function faqDiagram(s) {
+    return `%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A[${esc(s.btn_in_park)}] --> B[${esc(s.faq_intro)}]
+  B --> C[${esc(s.faq_back)}]
+  C --> D[${esc(s.main_menu_after_faq)}]`;
+  }
+
+  function serviceDiagram(s) {
+    return `%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A[${esc(s.btn_not_in_park)}] --> B[${esc(s.ask_service)}]
+  B --> C[${esc(s.yx_btn_doda)}]
+  B --> D[${esc(s.yx_btn_lavka)}]
+  B --> E[${esc(s.yx_btn_eats)}]`;
+  }
+
+  function dodaOverviewDiagram(s) {
+    return `%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A[${esc(s.ask_category)}] --> C[${esc(s.cat_car)}]
+  A --> T[${esc(s.cat_truck)}]
+  A --> M[${esc(s.cat_moto)}]
+  A --> B[${esc(s.cat_bike)}]
+  A --> F[${esc(s.cat_foot)}]
+  C --> S[${esc(s.ask_city)}]
+  T --> S
+  M --> S
+  B --> S
+  F --> S
+  S --> K[${esc(s.confirm_city("..."))}]
+  K --> Z[${esc(s.ask_citizenship_car)}]
+  K --> O[${esc(s.ask_citizenship_other)}]`;
+  }
+
+  function cityButtonsDiagram(s) {
+    return `%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A[${esc(s.ask_city)}] --> B[Москва]
+  A --> C[СПб]
+  A --> D[Волгоград]
+  A --> E[Воронеж]
+  A --> F[Казань]
+  A --> G[Краснодар]
+  A --> H[Н. Новгород]
+  A --> I[Новосибирск]
+  A --> J[Омск]
+  A --> K[Оренбург]
+  A --> L[Пермь]
+  A --> M[Ростов-на-Дону]
+  A --> N[Самара]
+  A --> O[Саратов]
+  A --> P[Тула]
+  A --> Q[Тюмень]
+  A --> R[Челябинск]
+  A --> S[Ярославль]
+  A --> T[${esc(s.city_other_btn)}]`;
+  }
+
+  function dodaCarDiagram(s) {
+    return `%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A[${esc(s.ask_citizenship_car)}] --> B[${esc(s.confirm_citizenship(s.yx_cit_rf))}]
+  A --> C[${esc(s.confirm_citizenship(s.cit_kg))}]
+  A --> D[${esc(s.confirm_citizenship(s.cit_kz))}]
+  A --> E[${esc(s.confirm_citizenship(s.cit_uz))}]
+  A --> F[${esc(s.confirm_citizenship(s.cit_tj))}]
+  A --> G[${esc(s.confirm_citizenship(s.cit_tm))}]
+  B --> H[${esc(s.ask_self_employed_car)}]
+  C --> H
+  D --> H
+  E --> I[${esc(s.ask_vehicle_rf)}]
+  F --> I
+  G --> I
+  H --> J[${esc(s.confirm_self_employed(true))}]
+  H --> K[${esc(s.confirm_self_employed(false))}]
+  J --> L[${esc(s.ask_reg_amina)}]
+  L --> M[${esc(s.ask_moy_nalog_phone)}]
+  M --> I
+  K --> I
+  I -->|${esc(s.btn_vehicle_rf_sts)}| N[${esc(s.ask_license_front)}]
+  I -->|${esc(s.btn_vehicle_foreign_tech)}| O[${esc(s.ask_license_front)}]
+  N --> P[${esc(s.ask_sts_front)}]
+  O --> Q[${esc(s.ask_tech_passport_front)}]
+  Q --> R[${esc(s.ask_tech_passport_back)}]
+  P --> S[${esc(s.ask_passport_front)}]
+  R --> S
+  S --> T[${esc(s.ask_passport_back)}]
+  T --> U[${esc(s.review_hint)}]
+  U --> V[${esc(s.submit_btn)}]`;
+  }
+
+  function dodaTruckDiagram(s) {
+    return `%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A[${esc(s.ask_citizenship_other)}] --> B[${esc(s.confirm_citizenship(s.cit_rf))}]
+  A --> C[${esc(s.confirm_citizenship(s.cit_kg))}]
+  A --> D[${esc(s.confirm_citizenship(s.cit_kz))}]
+  A --> E[${esc(s.confirm_citizenship(s.cit_uz))}]
+  A --> F[${esc(s.confirm_citizenship(s.cit_tj))}]
+  A --> G[${esc(s.confirm_citizenship(s.cit_tm))}]
+  B --> H[${esc(s.ask_self_employed_other)}]
+  C --> H
+  D --> H
+  E --> I[${esc(s.ask_vehicle_rf)}]
+  F --> I
+  G --> I
+  H --> J[${esc(s.confirm_self_employed(true))}]
+  H --> K[${esc(s.confirm_self_employed(false))}]
+  J --> L[${esc(s.ask_reg_amina)}]
+  L --> M[${esc(s.ask_moy_nalog_phone)}]
+  M --> I
+  K --> I
+  I -->|${esc(s.btn_vehicle_rf_sts)}| J[${esc(s.ask_license_front)}]
+  I -->|${esc(s.btn_vehicle_foreign_tech)}| K[${esc(s.ask_license_front)}]
+  J --> L2[${esc(s.ask_sts_front)}]
+  K --> M2[${esc(s.ask_tech_passport_front)}]
+  M2 --> N2[${esc(s.ask_tech_passport_back)}]
+  L2 --> O2[${esc(s.ask_truck_dimensions)}]
+  N2 --> O2
+  O2 -->|${esc(s.truck_dim_btn_S)}| P2[${esc(s.ask_truck_payload)}]
+  O2 -->|${esc(s.truck_dim_btn_M)}| P2
+  O2 -->|${esc(s.truck_dim_btn_L)}| P2
+  O2 -->|${esc(s.truck_dim_btn_XL)}| P2
+  O2 -->|${esc(s.truck_dim_btn_XXL)}| P2
+  P2 --> Q2[${esc(s.ask_truck_branding)}]
+  Q2 --> R2[${esc(s.ask_passport_front)}]
+  R2 --> S2[${esc(s.ask_passport_back)}]
+  S2 --> T2[${esc(s.review_hint)}]
+  T2 --> U2[${esc(s.submit_btn)}]`;
+  }
+
+  function dodaMotoDiagram(s) {
+    return `%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A[${esc(s.ask_citizenship_other)}] --> B[${esc(s.confirm_citizenship(s.cit_kg))}]
+  A --> C[${esc(s.confirm_citizenship(s.cit_kz))}]
+  A --> D[${esc(s.confirm_citizenship(s.cit_rf))}]
+  A --> E[${esc(s.confirm_citizenship(s.cit_uz))}]
+  A --> F[${esc(s.confirm_citizenship(s.cit_tj))}]
+  A --> G[${esc(s.confirm_citizenship(s.cit_tm))}]
+  B --> H[${esc(s.ask_self_employed_other)}]
+  C --> H
+  D --> H
+  E --> I[${esc(s.ask_license_front)}]
+  F --> I
+  G --> I
+  H --> J[${esc(s.confirm_self_employed(true))}]
+  H --> K[${esc(s.confirm_self_employed(false))}]
+  J --> L[${esc(s.ask_reg_amina)}]
+  L --> M[${esc(s.ask_moy_nalog_phone)}]
+  M --> I
+  K --> I
+  I --> N[${esc(s.ask_passport_front)}]
+  N --> O[${esc(s.ask_passport_back)}]
+  O --> P[${esc(s.review_hint)}]
+  P --> Q[${esc(s.submit_btn)}]`;
+  }
+
+  function dodaBikeFootDiagram(s) {
+    return `%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A[${esc(s.ask_citizenship_other)}] --> B[${esc(s.confirm_citizenship(s.cit_kg))}]
+  A --> C[${esc(s.confirm_citizenship(s.cit_kz))}]
+  A --> D[${esc(s.confirm_citizenship(s.cit_rf))}]
+  A --> E[${esc(s.confirm_citizenship(s.cit_uz))}]
+  A --> F[${esc(s.confirm_citizenship(s.cit_tj))}]
+  A --> G[${esc(s.confirm_citizenship(s.cit_tm))}]
+  B --> H[${esc(s.ask_self_employed_other)}]
+  C --> H
+  D --> H
+  E --> I[${esc(s.ask_passport_front)}]
+  F --> I
+  G --> I
+  H --> J[${esc(s.confirm_self_employed(true))}]
+  H --> K[${esc(s.confirm_self_employed(false))}]
+  J --> L[${esc(s.ask_reg_amina)}]
+  L --> M[${esc(s.ask_moy_nalog_phone)}]
+  M --> I
+  K --> I
+  I --> N[${esc(s.ask_passport_back)}]
+  N --> O[${esc(s.review_hint)}]
+  O --> P[${esc(s.submit_btn)}]`;
+  }
+
+  function yandexEntryDiagram(s) {
+    return `%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A[${esc(s.ask_service)}] --> B[${esc(s.yx_btn_lavka)}]
+  A --> C[${esc(s.yx_btn_eats)}]
+  A --> D[${esc(s.yx_btn_doda)}]
+  B --> E[${esc(s.yx_ask_city)}]
+  C --> E
+  D --> E
+  E --> F[${esc(s.yx_city_msk)}]
+  E --> G[${esc(s.yx_city_mo)}]
+  E --> H[${esc(s.yx_city_other)}]
+  H --> I[${esc(s.yx_city_other_blocked)}]
+  F --> J[${esc(s.yx_ask_citizen)}]
+  G --> J`;
+  }
+
+  function yxUzTjDiagram(s) {
+    return `%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A[${esc(s.yx_ask_citizen)}] --> B[${esc(s.yx_cit_uz_tj)}]
+  B --> C[${esc(s.yx_p_uz_pre_pass_f)}]
+  C --> D[${esc(s.yx_ask_uz_doc)}]
+  D --> E[${esc(s.yx_doc_patent)}]
+  D --> F[${esc(s.yx_doc_vnzh)}]
+  D --> G[${esc(s.yx_doc_student)}]
+  E --> E1[${esc(s.yx_p_uz_pat_front)}]
+  E1 --> E2[${esc(s.yx_p_uz_pat_back)}]
+  E2 --> E3[${esc(s.yx_p_mig)}]
+  E3 --> E4[${esc(s.yx_p_req_text)}]
+  E4 --> E5[${esc(s.yx_p_card16)}]
+  F --> F1[${esc(s.yx_p_vnzh_f)}]
+  F1 --> F2[${esc(s.yx_p_vnzh_b)}]
+  F2 --> F3[${esc(s.yx_p_inn)}]
+  F3 --> F4[${esc(s.yx_p_snils)}]
+  F4 --> F5[${esc(s.yx_p_mig)}]
+  F5 --> F6[${esc(s.yx_p_req_text)}]
+  F6 --> F7[${esc(s.yx_p_card16)}]
+  G --> G1[${esc(s.yx_p_st_bilet)}]
+  G1 --> G2[${esc(s.yx_p_st_spravka)}]
+  G2 --> G3[${esc(s.yx_p_mig)}]
+  G3 --> G4[${esc(s.yx_p_req_text)}]
+  G4 --> G5[${esc(s.yx_p_card16)}]`;
+  }
+
+  function yxKzKgDiagram(s) {
+    return `%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A[${esc(s.yx_ask_citizen)}] --> B[${esc(s.yx_cit_kz_kg)}]
+  B --> C[${esc(s.yx_kz_pass)}]
+  B --> D[${esc(s.yx_kz_id)}]
+  C --> E[${esc(s.yx_p_kz_pass_face)}]
+  D --> F[${esc(s.yx_p_kz_id_f)}]
+  F --> G[${esc(s.yx_p_kz_id_b)}]
+  E --> H[${esc(s.yx_p_mig)}]
+  G --> H
+  H --> I[${esc(s.yx_p_req_text)}]
+  I --> J[${esc(s.yx_p_card16)}]`;
+  }
+
+  function yxRfOtherDiagram(s) {
+    return `%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A[${esc(s.yx_ask_citizen)}] --> B[${esc(s.yx_cit_rf)}]
+  A --> C[${esc(s.yx_cit_other)}]
+  B --> D[${esc(s.yx_p_rf_pass_face)}]
+  C --> E[${esc(s.yx_p_other_pass_face)}]
+  D --> F[${esc(s.yx_p_rf_pass_prop)}]
+  E --> G[${esc(s.yx_p_other_pass_prop)}]
+  F --> H[${esc(s.yx_p_contact_phone)}]
+  G --> H
+  H --> I[${esc(s.yx_p_req_text)}]
+  I --> J[${esc(s.yx_p_card16)}]`;
+  }
+
+  function yxTmDiagram(s) {
+    return `%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A[${esc(s.yx_ask_citizen)}] --> B[${esc(s.yx_cit_tm)}]
+  B --> C[${esc(s.yx_ask_tm_visa)}]
+  C --> D[${esc(s.yx_tm_work)}]
+  C --> E[${esc(s.yx_tm_study)}]
+  C --> F[${esc(s.yx_tm_tourism)}]
+  F --> G[${esc(s.yx_tm_tourism_blocked)}]
+  D --> D1[${esc(s.yx_p_tm_visa)}]
+  D1 --> D2[${esc(s.yx_p_tm_amina_or_reg)}]
+  D2 --> D3[${esc(s.yx_p_mig)}]
+  D3 --> D4[${esc(s.yx_p_contact_phone)}]
+  D4 --> D5[${esc(s.yx_p_req_text)}]
+  D5 --> D6[${esc(s.yx_p_card16)}]
+  E --> E1[${esc(s.yx_p_tm_visa)}]
+  E1 --> E2[${esc(s.yx_p_st_bilet)}]
+  E2 --> E3[${esc(s.yx_p_st_spravka)}]
+  E3 --> E4[${esc(s.yx_p_mig)}]
+  E4 --> E5[${esc(s.yx_p_contact_phone)}]
+  E5 --> E6[${esc(s.yx_p_req_text)}]
+  E6 --> E7[${esc(s.yx_p_card16)}]`;
+  }
+
+  function finalDiagram(s) {
+    return `%%{init: {"theme": "dark"}}%%
+flowchart LR
+  A[${esc(s.review_hint)}] --> B[${esc(s.submit_btn)}]
+  B --> C[${esc(s.final_wait_intro)}]`;
+  }
+
+  function yxFinalDiagram(s) {
+    return `%%{init: {"theme": "dark"}}%%
+flowchart LR
+  A[${esc(s.yx_review_hint)}] --> B[${esc(s.yx_review_fix_btn)}]
+  B --> C[${esc(s.yx_review_pick_title)}]
+  C --> D[${esc(s.yx_review_fix_note)}]
+  D --> E[${esc(s.yx_btn_review_send)}]
+  E --> F[${esc(s.yx_final_thanks)}]`;
+  }
+
+  function buildPage(lang) {
+    const s = TEXT[lang];
+    const categoryCar = s.confirm_category_car(s.cat_car);
+    const categoryTruck = s.confirm_category_car(s.cat_truck);
+    const categoryMoto = s.confirm_category_other(s.cat_moto);
+    const categoryBike = s.confirm_category_other(s.cat_bike);
+    const categoryFoot = s.confirm_category_other(s.cat_foot);
+    return `
+      ${section(s.pick_language, startDiagram(s))}
+      ${section(s.main_menu_after_faq, faqDiagram(s))}
+      ${section(s.faq_intro, serviceDiagram(s))}
+      ${section(s.ask_category, dodaOverviewDiagram(s))}
+      ${section(s.ask_city, cityButtonsDiagram(s))}
+      ${section(categoryCar, dodaCarDiagram(s))}
+      ${section(categoryTruck, dodaTruckDiagram(s))}
+      ${section(categoryMoto, dodaMotoDiagram(s))}
+      ${section(categoryBike + " / " + categoryFoot, dodaBikeFootDiagram(s))}
+      ${section(s.yx_ask_city, yandexEntryDiagram(s))}
+      ${section(s.yx_ask_citizen, yxUzTjDiagram(s))}
+      ${section(s.yx_cit_kz_kg, yxKzKgDiagram(s))}
+      ${section(s.yx_cit_rf + " / " + s.yx_cit_other, yxRfOtherDiagram(s))}
+      ${section(s.yx_cit_tm, yxTmDiagram(s))}
+      ${section(s.submit_btn, finalDiagram(s))}
+      ${section(s.yx_review_hint, yxFinalDiagram(s))}
+    `;
+  }
+
+  function renderLangButtons(lang) {
+    const wrap = document.getElementById("langSwitch");
+    wrap.innerHTML = `
+      <button type="button" class="${lang === "uz" ? "active" : ""}" data-lang="uz">${esc(TEXT[lang].langBtnUz)}</button>
+      <button type="button" class="${lang === "ru" ? "active" : ""}" data-lang="ru">${esc(TEXT[lang].langBtnRu)}</button>
+    `;
+    wrap.querySelectorAll("button").forEach((btn) => {
+      btn.addEventListener("click", () => setLang(btn.dataset.lang));
+    });
+  }
+
+  async function render() {
+    const lang = currentLang();
+    document.documentElement.lang = lang;
+    document.title = TEXT[lang].pageTitle;
+    document.getElementById("pageTitle").textContent = TEXT[lang].pageTitle;
+    renderLangButtons(lang);
+    const content = document.getElementById("content");
+    content.innerHTML = buildPage(lang);
+    mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: "loose",
+      theme: "dark",
+      themeVariables: {
+        fontSize: window.matchMedia("(max-width: 560px)").matches ? "12px" : window.matchMedia("(max-width: 780px)").matches ? "13px" : "14px",
+      },
+      flowchart: {
+        curve: "basis",
+        padding: window.matchMedia("(max-width: 560px)").matches ? 8 : window.matchMedia("(max-width: 780px)").matches ? 9 : 10,
+        nodeSpacing: window.matchMedia("(max-width: 560px)").matches ? 20 : window.matchMedia("(max-width: 780px)").matches ? 26 : 32,
+        rankSpacing: window.matchMedia("(max-width: 560px)").matches ? 34 : window.matchMedia("(max-width: 780px)").matches ? 40 : 44,
+      },
+    });
+    await mermaid.run({ nodes: Array.from(content.querySelectorAll(".mermaid")) });
+  }
+
+  render();
 </script>
 </body>
 </html>
