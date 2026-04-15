@@ -51,13 +51,72 @@
       padding: 0.85rem;
       margin: 0 0 0.5rem;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
-    .diagram .mermaid { text-align: center; }
+    .diagram .mermaid {
+      text-align: center;
+      min-width: 1180px;
+    }
     .hint {
       font-size: 0.85rem;
       color: var(--muted);
       margin: 0 0 1.25rem;
       max-width: 40rem;
+    }
+
+    @media (max-width: 1024px) {
+      body {
+        padding: 1rem 0.65rem 1.6rem;
+      }
+
+      .diagram .mermaid {
+        min-width: 1040px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 0.9rem 0.5rem 1.2rem;
+        font-size: 14px;
+      }
+
+      h1 {
+        font-size: 1.2rem;
+      }
+
+      h2 {
+        font-size: 0.98rem;
+        margin-top: 1.25rem;
+      }
+
+      .diagram {
+        padding: 0.7rem;
+        border-radius: 12px;
+      }
+
+      .diagram .mermaid {
+        min-width: 920px;
+      }
+    }
+
+    @media (max-width: 540px) {
+      body {
+        padding: 0.75rem 0.4rem 1rem;
+        font-size: 13px;
+      }
+
+      .lead,
+      .hint {
+        font-size: 0.8rem;
+      }
+
+      .diagram {
+        padding: 0.6rem;
+      }
+
+      .diagram .mermaid {
+        min-width: 760px;
+      }
     }
   </style>
 </head>
@@ -167,11 +226,21 @@ flowchart TB
 
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <script>
+  const compact = window.matchMedia("(max-width: 768px)").matches;
+  const small = window.matchMedia("(max-width: 540px)").matches;
   mermaid.initialize({
     startOnLoad: true,
     theme: "dark",
     securityLevel: "loose",
-    flowchart: { curve: "basis", padding: 10, nodeSpacing: 32, rankSpacing: 44 }
+    themeVariables: {
+      fontSize: small ? "12px" : compact ? "13px" : "14px",
+    },
+    flowchart: {
+      curve: "basis",
+      padding: small ? 8 : compact ? 9 : 10,
+      nodeSpacing: small ? 20 : compact ? 26 : 32,
+      rankSpacing: small ? 34 : compact ? 40 : 44,
+    },
   });
 </script>
 </body>
