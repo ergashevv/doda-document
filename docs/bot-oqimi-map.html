@@ -3,256 +3,196 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Botda ulanish — oddiy qadamlar</title>
+  <title>Bot nimani so‘raydi?</title>
   <style>
     :root {
-      --bg: #faf8f5;
-      --card: #fff;
-      --text: #292524;
-      --muted: #78716c;
-      --border: #e7e5e4;
-      --accent: #0d9488;
-      --accent-soft: #f0fdfa;
-      --warm: #ea580c;
-      --warm-soft: #fff7ed;
+      --bg: #f7f5f2;
+      --paper: #fff;
+      --ink: #1c1917;
+      --soft: #57534e;
+      --line: #d6d3d1;
+      --green: #15803d;
+      --green-bg: #f0fdf4;
+      --blue: #1d4ed8;
+      --blue-bg: #eff6ff;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      padding: 1.5rem 1rem 3rem;
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 17px;
-      line-height: 1.65;
-      color: var(--text);
+      padding: 1.5rem 1rem 2.5rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 18px;
+      line-height: 1.55;
+      color: var(--ink);
       background: var(--bg);
-      max-width: 38rem;
+      max-width: 28rem;
       margin-left: auto;
       margin-right: auto;
     }
     h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin: 0 0 0.5rem;
-      line-height: 1.25;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 1.45rem;
+      font-weight: 800;
+      margin: 0 0 0.75rem;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
     }
-    .tagline {
-      color: var(--muted);
-      font-size: 1rem;
+    .answer {
+      font-size: 1.05rem;
       margin: 0 0 1.75rem;
+      padding: 1rem 1.1rem;
+      background: var(--paper);
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
+    .answer strong { color: var(--ink); }
 
-    .step-block {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.15rem 1.25rem;
-      margin-bottom: 0.75rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    .ladder {
+      margin: 0 0 2rem;
     }
-    .step-label {
-      display: inline-block;
-      font-size: 0.75rem;
+    .ladder-title {
+      font-family: system-ui, sans-serif;
+      font-size: 0.72rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      margin-bottom: 0.35rem;
+      letter-spacing: 0.12em;
+      color: var(--soft);
+      margin-bottom: 0.65rem;
     }
-    .step-block h2 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin: 0 0 0.5rem;
-      line-height: 1.3;
+    .rung {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      text-align: center;
+      font-family: system-ui, sans-serif;
+      font-weight: 600;
+      font-size: 0.98rem;
     }
-    .step-block p { margin: 0; color: var(--text); }
-
-    .arrow {
+    .rung small {
+      display: block;
+      font-weight: 400;
+      font-size: 0.88rem;
+      color: var(--soft);
+      margin-top: 0.25rem;
+    }
+    .down {
       text-align: center;
       color: #a8a29e;
-      font-size: 1.6rem;
-      padding: 0.2rem 0 0.5rem;
+      font-size: 1.4rem;
+      padding: 0.35rem 0;
       line-height: 1;
     }
 
-    .split-banner {
-      text-align: center;
-      margin: 1.75rem 0 1rem;
-      padding: 0.65rem 1rem;
-      background: var(--warm-soft);
-      border: 1px dashed #fdba74;
-      border-radius: 12px;
-      font-weight: 700;
+    h2 {
+      font-family: system-ui, sans-serif;
       font-size: 0.95rem;
-      color: #9a3412;
+      font-weight: 700;
+      margin: 0 0 0.75rem;
+      color: var(--soft);
     }
 
-    .choice-grid {
+    .two {
       display: grid;
-      gap: 0.75rem;
-      margin-bottom: 1.5rem;
+      gap: 1rem;
     }
-    @media (min-width: 560px) {
-      .choice-grid { grid-template-columns: 1fr 1fr 1fr; }
+    @media (min-width: 520px) {
+      .two { grid-template-columns: 1fr 1fr; }
     }
-    .choice {
-      background: var(--card);
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      padding: 1rem;
-      text-align: center;
+    .card {
+      border-radius: 14px;
+      padding: 1rem 1rem 1.1rem;
+      border: 2px solid var(--line);
     }
-    .choice .num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 2rem;
-      height: 2rem;
-      border-radius: 50%;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-weight: 800;
+    .card h3 {
+      font-family: system-ui, sans-serif;
       font-size: 1rem;
-      margin-bottom: 0.5rem;
+      font-weight: 800;
+      margin: 0 0 0.65rem;
+      line-height: 1.25;
     }
-    .choice strong {
-      display: block;
-      font-size: 0.95rem;
-      margin-bottom: 0.35rem;
-      line-height: 1.3;
-    }
-    .choice span {
-      font-size: 0.85rem;
-      color: var(--muted);
-      line-height: 1.4;
-    }
-
-    h3.path {
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin: 2rem 0 0.75rem;
-      padding-top: 0.25rem;
-      border-top: 1px solid var(--border);
-      color: var(--text);
-    }
-    h3.path:first-of-type { border-top: none; margin-top: 0.5rem; padding-top: 0; }
-
-    ol.simple {
+    .card p {
       margin: 0;
-      padding-left: 1.35rem;
-    }
-    ol.simple li {
-      margin-bottom: 0.65rem;
-      padding-left: 0.15rem;
-    }
-    ol.simple li:last-child { margin-bottom: 0; }
-
-    .hint {
-      background: #f5f5f4;
-      border-radius: 10px;
-      padding: 0.85rem 1rem;
-      font-size: 0.95rem;
-      color: var(--muted);
-      margin: 1rem 0 0;
-    }
-    .hint strong { color: var(--text); }
-
-    .sub {
       font-size: 0.98rem;
-      font-weight: 650;
-      margin: 1.25rem 0 0.5rem;
-      color: #44403c;
+      line-height: 1.55;
     }
+    .card.kuryer {
+      background: var(--green-bg);
+      border-color: #86efac;
+    }
+    .card.kuryer h3 { color: var(--green); }
+    .card.lavka {
+      background: var(--blue-bg);
+      border-color: #93c5fd;
+    }
+    .card.lavka h3 { color: var(--blue); }
 
-    ul.bullets {
-      margin: 0.35rem 0 0;
-      padding-left: 1.25rem;
+    details {
+      margin-top: 1.75rem;
+      font-family: system-ui, sans-serif;
+      font-size: 0.92rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      background: var(--paper);
     }
-    ul.bullets li { margin-bottom: 0.4rem; }
+    summary {
+      cursor: pointer;
+      font-weight: 650;
+      color: var(--ink);
+    }
+    details[open] summary {
+      margin-bottom: 0.65rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--line);
+    }
+    details p {
+      margin: 0.5rem 0 0;
+      color: var(--soft);
+      line-height: 1.5;
+      font-size: 0.9rem;
+    }
+    details p:first-of-type { margin-top: 0; }
   </style>
 </head>
 <body>
 
-<h1>Botda ulanish — oddiy qadamlar</h1>
-<p class="tagline">Bu sahifa <strong>foydalanuvchi uchun</strong>: nimalarni ketma-ket ko‘rasiz va qayerda tanlov bo‘lishi. Texnik tafsilotlar yo‘q.</p>
+<h1>Bot sizdan nimani so‘raydi?</h1>
 
-<div class="step-block">
-  <span class="step-label">Boshlanish</span>
-  <h2>Avvalo sizda bunday xabar bo‘ladi</h2>
-  <p>Taxminan: men parkda emasman, Doda taxi orqali ulanish kerak — degan mazmun. Pastda <strong>«Keyingi»</strong> (yoki shunga o‘xshash) tugma bo‘ladi; bosasiz.</p>
+<p class="answer">
+  <strong>Qisqa javob:</strong> avvalo ulanishni tasdiqlaysiz, keyin <em>qaysi ish</em>ni tanlaysiz — parkda kuryerlikmi, yoki Lavka / Yandex Ovqatmi. Shundan keyin savollar ikki xil: biri mashina va hujjatlar haqida, ikkinchisi shahar va mamlakatingiz bo‘yicha.
+</p>
+
+<div class="ladder">
+  <div class="ladder-title">Hammasi shu ketma-ketlikdan boshlanadi</div>
+  <div class="rung">1. Ulanish haqidagi matn<br><small>«Keyingi» bosasiz</small></div>
+  <div class="down" aria-hidden="true">↓</div>
+  <div class="rung">2. Qaysi xizmat?<br><small>uchta tugmadan bittasi</small></div>
+  <div class="down" aria-hidden="true">↓</div>
+  <div class="rung">3. Endi ikki xil yo‘l<br><small>pastdagi kartochkalardan biri</small></div>
 </div>
-<div class="arrow" aria-hidden="true">↓</div>
 
-<div class="step-block">
-  <span class="step-label">Keyingi ekran</span>
-  <h2>Qaysi xizmatda ishlashni xohlaysiz?</h2>
-  <p>Bot sizdan <strong>uchta variantdan birini</strong> tanlashni so‘raydi. Tanlovingizdan keyin yo‘l <strong>uch xil</strong> bo‘ladi — pastda har birini alohida yozdik.</p>
-</div>
+<h2>Pastda — ikki xil yo‘l</h2>
 
-<p class="split-banner">Endi uchta yo‘ldan biri ochiladi — qaysi tugmani bosganingizga qarab</p>
-
-<div class="choice-grid">
-  <div class="choice">
-    <div class="num">1</div>
-    <strong>Ru Park Doda kuryer</strong>
-    <span>Yetkazib berish transporti va hujjatlar (park kuryeri)</span>
+<div class="two">
+  <div class="card kuryer">
+    <h3>Parkda kuryer</h3>
+    <p>Avvalo <strong>qanday transport</strong> — mashina, yuk mashinasi, moto, velo yoki piyoda. Yengil mashina bo‘lsa, mashina hujjatlari so‘raladi. Keyin <strong>shahar</strong> va <strong>Rossiya fuqarosimisiz</strong> degan savol. Oxirida haydovchilik va boshqa hujjatlar ketma-ket, hammasi tugagach tekshiruv.</p>
   </div>
-  <div class="choice">
-    <div class="num">2</div>
-    <strong>Yandex Lavka</strong>
-    <span>Shahar va fuqarolik bo‘yicha boshqa savollar</span>
-  </div>
-  <div class="choice">
-    <div class="num">3</div>
-    <strong>Yandex Eats</strong>
-    <span>Lavka bilan bir xil tartib, faqat tanlangan xizmat boshqacha</span>
+  <div class="card lavka">
+    <h3>Lavka yoki Yandex Ovqat</h3>
+    <p>Ikkalasi <strong>bir xil tartib</strong>. Avval <strong>shahar</strong>, keyin <strong>qaysi davlat fuqarosiz</strong>. Undan keyin bot sizga o‘sha mamlakatga mos hujjatlarni <strong>bittadan</strong> ko‘rsatadi — pasport, suratlar, bank va telefon; ro‘yxat har joy uchun boshqacha.</p>
   </div>
 </div>
 
-<h3 class="path">Agar 1-variantni tanlasangiz — Doda kuryer (park)</h3>
-<p style="margin:0 0 0.75rem; color:var(--muted);">Ketma-ket nima bo‘lishi mumkin (taxminiy tartib):</p>
-<ol class="simple">
-  <li><strong>Qanday transportda ishlaysiz?</strong> — yengil mashina, yuk mashinasi, moto, velosiped yoki piyoda.</li>
-  <li><strong>Agar aynan yengil mashina tanlansa</strong> — keyin mashinangiz hujjatlari so‘raladi: Rossiyada ro‘yxatdan o‘tgan bo‘lsa — bitta hujjat turi; chet el mashina bo‘lsa — ikki tomondan texnik pasport suratlari.</li>
-  <li><strong>Boshqa transport turlarida</strong> (yuk, moto, velo, piyoda) — o‘sha «mashina hujjati» bosqichi odatda bo‘lmaydi, keyingi savollarga o‘tiladi.</li>
-  <li><strong>Qaysi shaharda ishlaysiz?</strong></li>
-  <li><strong>Rossiya fuqarosimisiz?</strong> — ha yoki yo‘q.</li>
-  <li><strong>Keyin sizdan turli hujjatlar suratlari ketma-ket so‘raladi</strong> — haydovchilik guvohnomasi, mashina hujjatlari, kerak bo‘lsa yuk mashinasi haqidagi qisqa savollar, velosipedda — bandlik haqidagi savol va hokazo. Oxirida hamma hujjat yig‘ilgach — tekshiruv va yuborish bosqichi.</li>
-</ol>
-
-<h3 class="path">Agar 2-variant (Lavka) yoki 3-variant (Eats) tanlasangiz</h3>
-<p style="margin:0 0 0.75rem; color:var(--muted);">Bu ikki xizmatda <strong>ketma-ketlik bir xil</strong>. Farqi shuki, keyin hisobotda qaysi xizmatni tanlaganingiz yoziladi.</p>
-<ol class="simple">
-  <li><strong>Qaysi shaharda ishlaysiz?</strong> — odatda Moskva yoki Sankt-Peterburg.</li>
-  <li><strong>Qaysi davlat fuqarosiz?</strong> — masalan O‘zbekiston, Tojikiston, Qozog‘iston, Qirg‘iziston, Rossiya yoki Turkmaniston. Tanlovingizga qarab keyingi savollar o‘zgaradi.</li>
-</ol>
-
-<p class="sub">O‘zbekiston yoki Tojikistonni tanlasangiz</p>
-<p style="margin:0 0 0.5rem; color:var(--muted);">Avval <strong>hujjat turi</strong> so‘raladi — masalan patent, yashash ruxsati (VnZh) yoki talabalik. Keyin har birida alohida tartib bor:</p>
-<ul class="bullets">
-  <li><strong>Patent bo‘yicha:</strong> pasport, patent suratlari, ro‘yxatdan o‘tish yoki «Amina» ilovasi bo‘yicha surat, migratsiya kartasi, patent to‘lovi haqidagi surat va fayl, bank rekvizitlari, karta raqami va kartaga ulangan telefon — va tugaydi.</li>
-  <li><strong>Yashash ruxsati (VnZh) bo‘yicha:</strong> VnZhning ikki tomoni, migratsiya kartasi, so‘ng aloqa telefoni, rekvizitlar, karta raqami va kartaga ulangan telefon.</li>
-  <li><strong>Talabalik bo‘yicha:</strong> talaba bileti, o‘qish spravkasi, pasport, ro‘yxat yoki «Amina», migratsiya kartasi, rekvizitlar, karta va telefon.</li>
-</ul>
-
-<p class="sub">Qozog‘iston yoki Qirg‘izistonni tanlasangiz</p>
-<ul class="bullets">
-  <li>Avval <strong>pasportmi yoki ID kartami</strong> ekaningiz so‘raladi. Pasport bo‘lsa — faqat foto sahifa; ID bo‘lsa — oldi va orqa.</li>
-  <li>Keyin migratsiya kartasi, ro‘yxat yoki «Amina», bank rekvizitlari, 16 raqamli karta va kartaga ulangan telefon.</li>
-</ul>
-
-<p class="sub">Rossiya fuqarosini tanlasangiz</p>
-<ul class="bullets">
-  <li>Pasportdagi surat sahifasi, keyin propiska (yashash joyi) sahifasi, aloqa telefoni, rekvizitlar, karta raqami, kartaga ulangan telefon.</li>
-</ul>
-
-<p class="sub">Turkmanistonni tanlasangiz</p>
-<ul class="bullets">
-  <li>Pasport, keyin ish yoki o‘qish vizasi turini tanlaysiz (ikkala holda ham viza surati kerak), ro‘yxat yoki «Amina», migratsiya kartasi, telefon, rekvizitlar, karta va telefon.</li>
-</ul>
-
-<div class="hint">
-  <strong>Eslatma.</strong> Bu yerda aniq tugma nomlari va har bir ekrandagi matnlar vaqti-vaqti bilan o‘zgarishi mumkin; muhimi — <strong>qaysi savoldan keyin qaysi turdagi hujjat yoki tanlov kutilishi</strong> shu tartibda tushuniladi.
-</div>
+<details>
+  <summary>«Mamlakat bo‘yicha» batafsil kerak bo‘lsa</summary>
+  <p><strong>O‘zbekiston yoki Tojikiston:</strong> avval so‘raydi — patentmi, yashash ruxsatimi, talabamisiz. Har birida hujjatlar tartibi boshqacha, lekin oxirida odatda bank rekviziti va telefon qoladi.</p>
+  <p><strong>Qozog‘iston yoki Qirg‘iziston:</strong> pasport yoki ID, keyin migratsiya va ro‘yxat (yoki «Amina»), so‘ng bank ma’lumotlari.</p>
+  <p><strong>Rossiya:</strong> pasport sahifalari, telefon, bank, karta.</p>
+  <p><strong>Turkmaniston:</strong> pasport, viza surati, ro‘yxat, migratsiya, telefon va bank.</p>
+</details>
 
 </body>
 </html>
