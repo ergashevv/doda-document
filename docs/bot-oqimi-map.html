@@ -55,7 +55,7 @@
     }
     .diagram .mermaid {
       text-align: center;
-      min-width: 1180px;
+      min-width: 1320px;
     }
     .hint {
       font-size: 0.85rem;
@@ -70,7 +70,7 @@
       }
 
       .diagram .mermaid {
-        min-width: 1040px;
+        min-width: 1160px;
       }
     }
 
@@ -95,7 +95,7 @@
       }
 
       .diagram .mermaid {
-        min-width: 920px;
+        min-width: 1000px;
       }
     }
 
@@ -115,7 +115,7 @@
       }
 
       .diagram .mermaid {
-        min-width: 760px;
+        min-width: 860px;
       }
     }
   </style>
@@ -123,104 +123,238 @@
 <body>
 <div class="page">
 
-<h1>Botda qanday ketma-ketlik bor?</h1>
-<p class="lead">Pastdagi chizmalar — strelkalar bilan: nima keyin nima kelishini ko‘rsatadi. Hech qanday texnik so‘z yo‘q.</p>
+<h1>Bot oqimi / Поток бота</h1>
+<p class="lead">Chizmadagi strelkalar botdagi haqiqiy savollar ketma-ketligini ko‘rsatadi. Sarlavhalar UZ / RU da berilgan.</p>
 
-<h2>1. Boshlash</h2>
+<h2>1. Boshlanish / Начало</h2>
 <div class="diagram">
 <pre class="mermaid">
 %%{init: {"theme": "dark", "themeVariables": { "fontSize": "14px" }}}%%
 flowchart TB
-  A([Botni ochish]) --> B[Tilni tanlaysiz]
-  B --> C[Telefon raqamingizni kiritasiz]
-  C --> D[Salom va menyu chiqadi]
-  D --> E{«Parkda emasman» tugmasi}
-  E -->|telefon yo‘q edi| C
-  E -->|telefon bor| F[Qaysi xizmatda ishlashni tanlaysiz?]
+  A([/start]) --> B[Tilni tanlaysiz / Выбираете язык]
+  B --> C[Telefon raqamini yuborasiz / Отправляете номер]
+  C --> D[Asosiy menyu / Главное меню]
+  D --> E{Qaysi tugma? / Какая кнопка?}
+  E -->|😎| F[Men parkdaman / Я в парке]
+  E -->|🙏| G[Parkga ulanmoqchiman / Хочу подключиться]
+  E -->|❓| H[Texnik yordam / Техподдержка]
+  H --> I[Muammoni yozasiz / Пишете проблему]
+  I --> D
 </pre>
 </div>
 
-<h2>2. Uchta xizmat — tanlov</h2>
+<h2>2. Parkdagi savollar / Вопросы в парке</h2>
 <div class="diagram">
 <pre class="mermaid">
 %%{init: {"theme": "dark"}}%%
 flowchart TB
-  Q[Qaysi xizmat?] --> A[Doda — park kuryeri]
-  Q --> B[Yandex Lavka]
-  Q --> C[Yandex Ovqat]
-  B --> X[Lavka va Ovqat — bir xil tartib]
-  C --> X
+  A[Asosiy menyu / Главное меню] --> B[Savollar ro‘yxati / Список вопросов]
+  B --> C[Bir savolni bosasiz / Нажимаете вопрос]
+  C --> B
+  B --> D[⬅ Orqaga / Назад]
+  D --> A
 </pre>
 </div>
-<p class="hint">Lavka bilan Ovqatda savollar bir xil; faqat qaysi xizmatni tanlaganingiz yoziladi.</p>
 
-<h2>3. Doda park kuryeri</h2>
-<p class="hint">Avvalo savollar, keyin hujjatlar yuklash.</p>
+<h2>3. Ulanish yo‘li / Путь подключения</h2>
 <div class="diagram">
 <pre class="mermaid">
 %%{init: {"theme": "dark"}}%%
 flowchart TB
-  subgraph savol [Avval savollar]
-    S1[Qanday transportda ishlaysiz?] --> S2[Qaysi shaharda?]
-    S2 --> S3[Qaysi davlat fuqarosiz?]
-  end
-  S3 --> H[Keyingi qadam — transportga qarab]
+  A[Parkga ulanmoqchiman / Хочу подключиться] --> B[Xizmatni tanlaysiz / Выбираете сервис]
+  B --> C[Doda kuryer / Doda курьер]
+  B --> D[Yandex Lavka / Яндекс Лавка]
+  B --> E[Yandex Eda / Яндекс Еда]
 </pre>
 </div>
-<p class="hint">Keyingi chizmada uchta ustun: yengil mashina, moto, velo yoki piyoda — <strong>faqat siz tanlagan transport</strong> bo‘yicha ketma-ketlik ochiladi.</p>
+
+<h2>4. Doda / Дода</h2>
 <div class="diagram">
 <pre class="mermaid">
 %%{init: {"theme": "dark"}}%%
 flowchart TB
-  subgraph yengil [Yengil yoki yuk mashina]
-    Y1{Ba’zi davlatlarda: o‘z-o‘zini band qildingizmi?} --> Y2{Mashina Rossiyada ro‘yxatdan o‘tganmi?}
-    Y2 -->|ha| Y3[Haydovchilik guvohnomasi va STS]
-    Y2 -->|yo‘q| Y4[Haydovchilik guvohnomasi va texnik pasport]
-    Y3 --> Y5{Yuk mashinasi?}
-    Y4 --> Y5
-    Y5 -->|ha| Y6[Gabarit, yuk, yuk mashinasi bezashi haqida savollar]
-    Y5 -->|yo‘q| P[Pasport suratlari]
-    Y6 --> P
-  end
-  subgraph moto [Moto]
-    M1[O‘sha «bandlik» savollari kerak bo‘lsa] --> M2[Haydovchilik guvohnomasi] --> M3[Pasport]
-  end
-  subgraph velo [Velosiped yoki piyoda]
-    V1[O‘sha «bandlik» savollari kerak bo‘lsa] --> V2[Pasport suratlari]
-  end
+  A[Transportni tanlaysiz / Выбираете транспорт] --> C[🚗 Yengil avtomobil / Легковая]
+  A --> T[🚚 Yuk mashinasi / Грузовая]
+  A --> M[🏍 Mototransport / Мото]
+  A --> B[🚲 Velosiped / Велосипед]
+  A --> F[🚶 Piyoda / Пешком]
 </pre>
 </div>
+
+<div class="diagram">
+<pre class="mermaid">
+%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A{Fuqarolik rf/kg/kz? / Гражданство rf/kg/kz?}
+  A -->|ha| B[O‘zini o‘zi band qilganmisiz? / Самозанятый?]
+  A -->|yo‘q| D[Mashina Rossiyada ro‘yxatdan o‘tganmi? / Машина в РФ?]
+  B -->|ha| C[Ro‘yxatdan o‘tganlik / Регистрация]
+  B -->|yo‘q| D
+  C --> E[Moy nalog telefoni / Телефон Мой налог]
+  E --> D
+  D -->|ha| L[Prava / ВУ] --> S[STS]
+  D -->|yo‘q| L --> P[Texnik pasport old / Техпаспорт лицевая]
+  P --> Q[Texnik pasport orqa / Техпаспорт оборот]
+  S --> X{Yuk mashinasi? / Грузовая?}
+  Q --> X
+  X -->|ha| Y[Gabarit] --> Z[Yuk ko‘tarish / Грузоподъемность] --> W[Bezash / Оклейка]
+  X -->|yo‘q| N[Pasport old / Паспорт лицевая]
+  W --> N
+  N --> O[Pasport orqa / Паспорт оборот]
+</pre>
+</div>
+
+<div class="diagram">
+<pre class="mermaid">
+%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A{Fuqarolik rf/kg/kz? / Гражданство rf/kg/kz?}
+  A -->|ha| B[O‘zini o‘zi band qilganmisiz? / Самозанятый?]
+  A -->|yo‘q| D[Prava / ВУ]
+  B -->|ha| C[Ro‘yxatdan o‘tganlik / Регистрация]
+  B -->|yo‘q| D
+  C --> E[Moy nalog telefoni / Телефон Мой налог]
+  E --> D
+  D --> F[Pasport old / Паспорт лицевая]
+  F --> G[Pasport orqa / Паспорт оборот]
+</pre>
+</div>
+
+<div class="diagram">
+<pre class="mermaid">
+%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A{Fuqarolik rf/kg/kz? / Гражданство rf/kg/kz?}
+  A -->|ha| B[O‘zini o‘zi band qilganmisiz? / Самозанятый?]
+  A -->|yo‘q| D[Pasport old / Паспорт лицевая]
+  B -->|ha| C[Ro‘yxatdan o‘tganlik / Регистрация]
+  B -->|yo‘q| D
+  C --> E[Moy nalog telefoni / Телефон Мой налог]
+  E --> D
+  D --> F[Pasport orqa / Паспорт оборот]
+</pre>
+</div>
+
+<p class="hint">Yengil avtomobil va yuk mashinasi bir xil boshlanadi, lekin yuk mashinasida qo‘shimcha uchta qadam bor. Moto, velosiped va piyoda alohida ko‘rsatilgan.</p>
+
 <div class="diagram">
 <pre class="mermaid">
 %%{init: {"theme": "dark"}}%%
 flowchart LR
-  T1[Hamma hujjat yig‘ildi] --> T2[Ko‘rib chiqasiz va yuborasiz]
+  A[Hammasini ko‘rib chiqasiz / Проверяете всё] --> B[✅ Yuborish / Отправить]
+  B --> C[Menejer tayyorlaydi / Менеджер tayyorlaydi]
 </pre>
 </div>
 
-<h2>4. Lavka va Yandex Ovqat</h2>
+<h2>5. Lavka va Yandex Eda / Лавка и Яндекс Еда</h2>
 <div class="diagram">
 <pre class="mermaid">
 %%{init: {"theme": "dark"}}%%
 flowchart TB
-  L1{Ishlash shahri} -->|Moskva yoki viloyat| L3[Qaysi mamlakatsiz?]
-  L1 -->|boshqa shahar| L2[Hozircha ulanmaydi — qayta tanlash]
-  L3 --> U[O‘zbekiston / Tojikiston: pasport, keyin hujjat turi]
-  L3 --> K[Qozog‘iston / Qirg‘iziston: pasport yoki ID]
-  L3 --> R[Rossiya yoki boshqa davlat: pasport sahifalari]
-  L3 --> T[Turkmaniston: viza haqida savol]
-  T --> T1{Turistik viza?}
-  T1 -->|ha| TB[Bu yo‘l hozircha yopiq]
-  T1 -->|yoq| TW[Suratlar ketma-ket]
-  U --> Z[Bot suratlarni va ma’lumotlarni ketma-ket so‘raydi]
-  K --> Z
-  R --> Z
-  TW --> Z
-  Z --> F[Oxirida ko‘rib chiqish va yuborish]
+  A[Servis / Сервис] --> B[Yandex Lavka / Яндекс Лавка]
+  A --> C[Yandex Eda / Яндекс Еда]
+  B --> D[Shahar / Город]
+  C --> D
+  D --> E[Mamlakat / Страна]
 </pre>
 </div>
 
-<p class="hint" style="margin-top:1.5rem; opacity:0.75;">Agar yozuv kichik ko‘rinsa, chizma ustida chap-o‘ng siljiting.</p>
+<div class="diagram">
+<pre class="mermaid">
+%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A[O‘zbekiston / Tojikiston] --> B[Pasport oldi / Паспорт лицевая]
+  B --> C[Hujjat turi / Тип документа]
+  C -->|Patent| P1[Patent]
+  C -->|VNZH| V1[VNZH]
+  C -->|Talaba| S1[Talaba]
+  P1 --> P2[Pasport orqa / Паспорт оборот]
+  P2 --> R{Registratsiya yoki Amina? / Регистрация или Амина?}
+  R -->|Registratsiya| R1[Registratsiya old]
+  R -->|Amina| R2[Amina]
+  R1 --> M[Migratsiya]
+  R2 --> M
+  M --> T{Telefon kerakmi? / Нужен телефон?}
+  T -->|ha| U[Telefon]
+  T -->|yo‘q| K[Rekvizit matni / Реквизиты]
+  U --> K
+  K --> N[16 raqamli karta / 16 цифр]
+  V1 --> V2[Pasport old / Паспорт лицевая]
+  V2 --> V3[Pasport orqa / Паспорт оборот]
+  V3 --> I[INN]
+  I --> S[SNILS]
+  S --> M2[Migratsiya]
+  M2 --> T2{Telefon kerakmi? / Нужен телефон?}
+  T2 -->|ha| U2[Telefon]
+  T2 -->|yo‘q| K2[Rekvizit matni / Реквизиты]
+  U2 --> K2
+  K2 --> N2[16 raqamli karta / 16 цифр]
+  S1 --> ST1[Talaba bileti]
+  ST1 --> ST2[O‘qish spravkasi]
+  ST2 --> R3{Registratsiya yoki Amina? / Регистрация или Амина?}
+  R3 -->|Registratsiya| SR1[Registratsiya old]
+  R3 -->|Amina| SA1[Amina]
+  SR1 --> SM[Migratsiya]
+  SA1 --> SM
+  SM --> SK[Rekvizitlar]
+  SK --> SN[16 raqamli karta / 16 цифр]
+</pre>
+</div>
+
+<div class="diagram">
+<pre class="mermaid">
+%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A[Qozog‘iston / Qirg‘iziston] --> B[Pasport yoki ID / Паспорт или ID]
+  B --> C[Migratsiya]
+  C --> D{Registratsiya yoki Amina? / Регистрация или Амина?}
+  D -->|Registratsiya| E[Registratsiya old]
+  D -->|Amina| F[Amina]
+  E --> G[16 raqamli karta / 16 цифр]
+  F --> G
+</pre>
+</div>
+
+<div class="diagram">
+<pre class="mermaid">
+%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A[RF / Boshqa davlat] --> B[Pasport oldi / Паспорт лицевая]
+  B --> C[Pasport ro‘yxati / Прописка]
+  C --> D[Rekvizit matni / Реквизиты]
+  D --> E[16 raqamli karta / 16 цифр]
+</pre>
+</div>
+
+<div class="diagram">
+<pre class="mermaid">
+%%{init: {"theme": "dark"}}%%
+flowchart TB
+  A[Turkmaniston] --> B{Viza turi / Тип визы?}
+  B -->|Ish / Рабочая| C[Viza]
+  B -->|O‘qish / Учебная| D[Student yo‘li]
+  B -->|Turizm / Туризм| E[Hozir yopiq / Сейчас закрыто]
+  C --> F[Amina yoki registratsiya]
+  F --> G[Migratsiya]
+  G --> H{Telefon kerakmi? / Нужен телефон?}
+  H -->|ha| I[Telefon]
+  H -->|yo‘q| J[Rekvizit matni / Реквизиты]
+  I --> J
+  J --> K[16 raqamli karta / 16 цифр]
+  D --> D1[Turkman talaba yo‘li]
+  D1 --> D2[Student bileti]
+  D2 --> D3[Spravka]
+  D3 --> D4[Amina yoki registratsiya]
+  D4 --> D5[Migratsiya]
+  D5 --> D6{Telefon kerakmi? / Нужен телефон?}
+  D6 -->|ha| D7[Telefon]
+  D6 -->|yo‘q| D8[Rekvizit matni / Реквизиты]
+  D7 --> D8
+  D8 --> D9[16 raqamli karta / 16 цифр]
+</pre>
+</div>
+
+<p class="hint" style="margin-top:1.5rem; opacity:0.75;">Agar yozuv kichik ko‘rinsa, chizma ustida chap-o‘ng siljiting. Bu sahifada UZ / RU ko‘rsatilgan; bot ichida yana boshqa tillar ham bor.</p>
 
 </div>
 
