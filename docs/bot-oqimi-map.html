@@ -3,127 +3,191 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Onboarding oqimi — Doda bot (1-bosqich)</title>
+  <title>1-bosqich onboarding — reja bo‘yicha xarita</title>
   <style>
     :root {
-      --bg: #f6f4f0;
+      --bg: #f4f2ed;
       --card: #fff;
-      --text: #1a1a1a;
-      --muted: #5c5c5c;
-      --border: #e0dcd4;
-      --accent: #2563eb;
-      --accent-soft: #eff6ff;
-      --branch-a: #059669;
-      --branch-a-bg: #ecfdf5;
-      --branch-b: #d97706;
-      --branch-b-bg: #fffbeb;
-      --branch-c: #7c3aed;
-      --branch-c-bg: #f5f3ff;
-      --arrow: #94a3b8;
-      --if-bg: #fef3c7;
-      --if-border: #f59e0b;
+      --text: #1c1917;
+      --muted: #57534e;
+      --border: #d6d3d1;
+      --blue: #1d4ed8;
+      --blue-bg: #eff6ff;
+      --green: #047857;
+      --green-bg: #ecfdf5;
+      --amber: #b45309;
+      --amber-bg: #fffbeb;
+      --violet: #6d28d9;
+      --violet-bg: #f5f3ff;
+      --diagram-bg: #1e1e1e;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      padding: 1.5rem 1rem 4rem;
-      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      padding: 1.25rem 1rem 3rem;
+      font-family: "Segoe UI", system-ui, sans-serif;
       font-size: 15px;
-      line-height: 1.55;
+      line-height: 1.6;
       color: var(--text);
       background: var(--bg);
-      max-width: 42rem;
+      max-width: 52rem;
       margin-left: auto;
       margin-right: auto;
     }
     h1 {
-      font-size: 1.35rem;
-      font-weight: 600;
-      margin: 0 0 0.5rem;
+      font-size: 1.4rem;
+      font-weight: 650;
+      margin: 0 0 0.35rem;
       letter-spacing: -0.02em;
     }
-    .subtitle {
+    .lead {
       color: var(--muted);
-      margin: 0 0 1.75rem;
+      margin: 0 0 1rem;
       font-size: 0.95rem;
     }
-    .legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem 1rem;
-      margin-bottom: 1.5rem;
-      padding: 0.75rem 1rem;
+    .toc {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 10px;
-      font-size: 0.85rem;
-      color: var(--muted);
+      padding: 0.85rem 1.1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
     }
-    .legend span { display: inline-flex; align-items: center; gap: 0.35rem; }
-    .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-    .flow {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0;
+    .toc strong { display: block; margin-bottom: 0.4rem; color: var(--text); }
+    .toc ol { margin: 0; padding-left: 1.25rem; }
+    .toc a { color: var(--blue); text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+
+    h2 {
+      font-size: 1.05rem;
+      font-weight: 650;
+      margin: 2rem 0 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid var(--border);
+      scroll-margin-top: 0.5rem;
     }
-    .arrow {
-      text-align: center;
-      color: var(--arrow);
-      font-size: 1.35rem;
-      line-height: 1;
-      padding: 0.35rem 0;
-      user-select: none;
-    }
-    .step {
+    h2.sec-a { border-bottom-color: var(--blue); color: var(--blue); }
+    h2.sec-b { border-bottom-color: var(--green); color: var(--green); }
+    h2.sec-c { border-bottom-color: var(--amber); color: var(--amber); }
+
+    .callout {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1rem 1.1rem;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      margin: 0.75rem 0;
     }
-    .step-num {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--accent);
-      margin-bottom: 0.35rem;
+    .callout p { margin: 0 0 0.5rem; }
+    .callout p:last-child { margin-bottom: 0; }
+
+    .fork-wrap {
+      margin: 1rem 0;
     }
-    .step-title { font-weight: 600; margin-bottom: 0.35rem; }
-    .step-out {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin: 0;
-    }
-    .step-out strong { color: var(--text); font-weight: 500; }
-    .branch-label {
-      margin: 1.25rem 0 0.5rem;
+    .fork-title {
+      text-align: center;
       font-size: 0.8rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 0.65rem;
     }
-    .branch-label.doda { color: var(--branch-a); }
-    .branch-label.lavka { color: var(--branch-b); }
-    .branch-label.sub { color: var(--branch-c); font-size: 0.72rem; margin-top: 1rem; }
-    .step.branch-doda { border-left: 4px solid var(--branch-a); background: var(--branch-a-bg); }
-    .step.branch-lavka { border-left: 4px solid var(--branch-b); background: var(--branch-b-bg); }
-    .step.branch-sub { border-left: 4px solid var(--branch-c); background: var(--branch-c-bg); }
-    .if-box {
-      margin-top: 0.5rem;
-      padding: 0.6rem 0.75rem;
-      background: var(--if-bg);
-      border: 1px solid var(--if-border);
-      border-radius: 8px;
+    .fork-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.65rem;
+    }
+    @media (min-width: 640px) {
+      .fork-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .fork-card {
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      border: 2px solid var(--border);
+      background: var(--card);
+    }
+    .fork-card h3 {
+      margin: 0 0 0.4rem;
       font-size: 0.88rem;
+      font-weight: 700;
     }
-    .if-box .label { font-weight: 600; color: #92400e; margin-bottom: 0.25rem; }
-    ul.tight {
-      margin: 0.35rem 0 0 1.1rem;
-      padding: 0;
+    .fork-card p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--muted);
     }
-    ul.tight li { margin-bottom: 0.25rem; }
+    .fork-card.k1 { border-color: #047857; background: var(--green-bg); }
+    .fork-card.k1 h3 { color: var(--green); }
+    .fork-card.k2 { border-color: #b45309; background: var(--amber-bg); }
+    .fork-card.k2 h3 { color: var(--amber); }
+    .fork-card.k3 { border-color: #b45309; background: var(--amber-bg); }
+    .fork-card.k3 h3 { color: var(--amber); }
+    .fork-note {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.65rem;
+      text-align: center;
+    }
+
+    .arrow-down {
+      text-align: center;
+      color: #a8a29e;
+      font-size: 1.5rem;
+      line-height: 1;
+      padding: 0.35rem 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin: 0.75rem 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 0.55rem 0.65rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    th { background: #f5f5f4; font-weight: 600; font-size: 0.8rem; }
+    tr:last-child td { border-bottom: none; }
+    code { font-size: 0.84em; background: #e7e5e4; padding: 0.1em 0.35em; border-radius: 4px; }
+
+    .diagram-wrap {
+      background: var(--diagram-bg);
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 1rem;
+      margin: 1rem 0;
+      overflow-x: auto;
+    }
+    .diagram-wrap .mermaid { text-align: center; }
+
+    ol.steps {
+      margin: 0.5rem 0 0;
+      padding-left: 1.35rem;
+    }
+    ol.steps li { margin-bottom: 0.35rem; }
+    .subhead {
+      font-size: 0.92rem;
+      font-weight: 650;
+      margin: 1rem 0 0.35rem;
+      color: var(--violet);
+    }
+    .box {
+      background: var(--violet-bg);
+      border-left: 4px solid var(--violet);
+      padding: 0.75rem 1rem;
+      margin: 0.75rem 0;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.9rem;
+    }
+    .muted { color: var(--muted); font-size: 0.9rem; }
+
     .note {
       margin-top: 2rem;
       padding: 1rem;
@@ -134,186 +198,234 @@
       color: var(--muted);
     }
     .note strong { color: var(--text); }
-    hr.sep {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 1.5rem 0;
-    }
-    code {
-      font-size: 0.85em;
-      background: #e8e6e1;
-      padding: 0.12em 0.35em;
-      border-radius: 4px;
-    }
   </style>
 </head>
 <body>
 
-<h1>1-bosqich onboarding — ketma-ketlik</h1>
-<p class="subtitle">Reja: <code>onboarding_flow_tree</code>. Har bir qadamda nima chiqishi — tepadan pastga, strelkalar bilan. Lavka va Yandex Eats bir xil zanjir.</p>
+<h1>1-bosqich onboarding — reja bo‘yicha xarita</h1>
+<p class="lead">Manba: <code>onboarding_flow_tree</code> rejasi. Asosiy g‘oya: <strong>1 va 2.1 qadam hamma uchun bir xil</strong>, keyin <strong>uchta alohida yo‘l</strong> (Doda kuryer · Lavka · Eats). Lavka bilan Eats bir xil zanjir.</p>
 
-<div class="legend">
-  <span><i class="dot" style="background:var(--accent)"></i> umumiy qadam</span>
-  <span><i class="dot" style="background:var(--branch-a)"></i> Doda kuryer (park)</span>
-  <span><i class="dot" style="background:var(--branch-b)"></i> Lavka / Eats</span>
-  <span><i class="dot" style="background:var(--branch-c)"></i> ichki tarmoq</span>
+<nav class="toc" aria-label="Bo‘limlar">
+  <strong>Sahifada nima bor</strong>
+  <ol>
+    <li><a href="#umumiy">1-qadam va 2.1-qadam (hamma uchun)</a></li>
+    <li><a href="#fork">2.1 dan keyin uchta parallel yo‘l</a></li>
+    <li><a href="#diagram">Rejadagi umumiy daraxt (Mermaid)</a></li>
+    <li><a href="#doda">Yo‘l 1: Ru Park Doda kuryer (kod oqimi)</a></li>
+    <li><a href="#lavka">Yo‘l 2 va 3: Lavka va Eats (bir xil TZ)</a></li>
+  </ol>
+</nav>
+
+<h2 id="umumiy" class="sec-a">Boshida — faqat ikkita qadam (hamma uchun)</h2>
+
+<div class="callout">
+  <p><strong>1-qadam.</strong> Ekranda: «Men parkda emasman (Doda taxi), ulanish kerak» ga o‘xshash matn. Foydalanuvchi <strong>Keyingi</strong> bosadi.</p>
+  <p><strong>2.1-qadam (alohida ekran).</strong> Savol: «Qaysi servisda ishlashni xohlaysiz?» — <strong>uchta tugma</strong>:</p>
+  <ol class="steps">
+    <li>Ru Park Doda kuryer</li>
+    <li>Yandex Lavka</li>
+    <li>Yandex Eats</li>
+  </ol>
 </div>
 
-<div class="flow">
+<p class="muted">Shu joydan keyin oqimlar <strong>ajraladi</strong> — pastdagi Doda bo‘limi va Lavka bo‘limi ketma-ket emas, balki tanlangan tugmaga qarab <strong>parallel</strong> yo‘llar.</p>
 
-  <div class="step">
-    <div class="step-num">Bosqich 1</div>
-    <div class="step-title">Ekran matni (ulanish)</div>
-    <p class="step-out">Foydalanuvchi: «Men parkda emasman (Doda taxi), ulanish kerak» ga o‘xshash xabar / <strong>Keyingi</strong> bosadi.</p>
-  </div>
-  <div class="arrow" aria-hidden="true">↓</div>
-
-  <div class="step">
-    <div class="step-num">Bosqich 2.1</div>
-    <div class="step-title">Savol: qaysi servisda ishlashni xohlaysiz?</div>
-    <p class="step-out">Uchta tugma chiqadi. Tanlovdan keyingi ekranlar quyida <strong>alohida</strong> tushuntiriladi.</p>
-  </div>
-  <div class="arrow" aria-hidden="true">↓</div>
-
-  <p class="branch-label doda">Agar «Ru Park Doda kuryer» tanlansa</p>
-  <div class="step branch-doda">
-    <div class="step-num">Doda · 1</div>
-    <div class="step-title">Transport turi</div>
-    <p class="step-out">Ekranda kategoriya tanlovi: <strong>legkovoy (car)</strong>, <strong>yuk (truck)</strong>, <strong>moto</strong>, <strong>velosiped (bike)</strong>, <strong>piyoda (foot)</strong>.</p>
-  </div>
-  <div class="arrow">↓</div>
-
-  <div class="step branch-doda">
-    <div class="step-num">Doda · 2 (faqat legkovoy)</div>
-    <div class="step-title">Mashina hujjati — shartli</div>
-    <div class="if-box">
-      <div class="label">Agar legkovoy (car) tanlangan bo‘lsa</div>
-      Keyingi ekran: Rossiyada ro‘yxatdan o‘tgan bo‘lsa — <strong>STS</strong>; chet el avto bo‘lsa — <strong>texnik pasport oldi + orqa</strong> (2 surat).
+<h2 id="fork">2.1 dan keyin — uchta parallel yo‘l</h2>
+<div class="fork-wrap">
+  <div class="fork-title">Bosqich 2.1 dagi tugmani tanlasangiz</div>
+  <div class="fork-grid">
+    <div class="fork-card k1">
+      <h3>1) Ru Park Doda kuryer</h3>
+      <p>Transport → (faqat legkovoy: STS yoki 2× texnik pasport) → shahar → «RF fuqarosimisiz?» → <code>dodaDocSequence</code> → review.</p>
     </div>
-    <div class="if-box" style="margin-top:0.5rem;">
-      <div class="label">Agar truck / moto / bike / foot tanlansa</div>
-      Ushbu qadam o‘tkazib yuboriladi → to‘g‘ridan-to‘g‘ri <strong>shahar</strong> tanloviga o‘tadi.
+    <div class="fork-card k2">
+      <h3>2) Yandex Lavka</h3>
+      <p>Shahar (Moskva / SPb) → fuqarolik (UZ/TJ, KZ/KG, RF, TM) → hujjatlar daraxti. Kod oqimi Doda kuryer kabi emas.</p>
+    </div>
+    <div class="fork-card k3">
+      <h3>3) Yandex Eats</h3>
+      <p>Lavka bilan <strong>to‘liq bir xil</strong> ketma-ketlik; farq faqat saqlanadigan servis nomi.</p>
     </div>
   </div>
-  <div class="arrow">↓</div>
+  <p class="fork-note">Lavka va Eats: shahar + fuqarolik + hujjatlar — <strong>mahsulot TZ</strong>. Doda kuryer: <strong>alohida modul</strong> (RF faqat boolean + transport/hujjat zanjiri).</p>
+</div>
 
-  <div class="step branch-doda">
-    <div class="step-num">Doda · 3</div>
-    <div class="step-title">Shahar</div>
-    <p class="step-out">Shahar tanlovi (kodda <code>bk_G</code>). Keyingi ekran: fuqarolik savoli.</p>
-  </div>
-  <div class="arrow">↓</div>
+<h2 id="diagram">Rejadagi umumiy daraxt (vizual)</h2>
+<p class="muted">Quyidagi diagramma rejadagi «Daraxt (mermaid)» bilan bir xil — qayerda qaysi tarmoq borishini bir qarashda ko‘rish uchun.</p>
+<div class="diagram-wrap">
+<pre class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"primaryColor": "#3c3c3c", "primaryTextColor": "#fff", "lineColor": "#94a3b8", "secondaryColor": "#252526", "tertiaryColor": "#1e1e1e"}}}%%
+flowchart TB
+  subgraph step1 [1_qadam]
+    R["Parkda emasman Doda taxi ulanish kerak"]
+  end
+  subgraph step21 [2_1_qadam]
+    Q21["Qaysi servisda ishlashni xohlaysiz"]
+  end
+  R --> Q21
+  subgraph doda ["1_Ru_Park_Doda_kuryer_kod"]
+    D1[Transport_turi_categoryKey]
+    D1 --> Dcar[Legkovoy_car]
+    D1 --> Dtruck[Gruzovoy_truck]
+    D1 --> Dmoto[Moto]
+    D1 --> Dbike[Velosiped_bike]
+    D1 --> Dfoot[Piyoda_foot]
+    Dcar --> Vrf{Rossiya_STS_yoki_2x_tehnik_pasport}
+    Dtruck --> DcityBK[Shahar_bk_G]
+    Dmoto --> DcityBK
+    Dbike --> DcityBK
+    Dfoot --> DcityBK
+    Vrf --> DcityBK
+    DcityBK --> DcitBK{Rossiya_fuqarosimi_bk_Z}
+    DcitBK --> Dseq[dodaDocSequence_keyingi]
+  end
+  Q21 -->|1_Ru_Park_Doda_kuryer| D1
+  subgraph lavka_eats [2_3_Lavka_va_Eats_bir_xil_oqim]
+    Lcity[Shahar]
+    Lcity --> Lmsk[Moscow]
+    Lcity --> Lspb[Piter]
+    Lmsk --> LCit[Fuqarolik]
+    Lspb --> LCit
+    LCit -->|UZ_yoki_TJ| UZtj[Subflow_UZ_TJ]
+    LCit -->|KZ_yoki_KG| KZKG0[Subflow_KZ_KG]
+    LCit -->|RF| RF0[Subflow_RF]
+    LCit -->|TM| TM0[Subflow_Turkmen]
+  end
+  Q21 -->|2_Yandex_Lavka| Lcity
+  Q21 -->|3_Yandex_Eats| Lcity
+</pre>
+</div>
 
-  <div class="step branch-doda">
-    <div class="step-num">Doda · 4</div>
-    <div class="step-title">«Rossiya fuqarosimisiz?»</div>
-    <p class="step-out">Ha / yo‘q (<code>bk_Z</code>, <code>rfCitizen</code>). Keyingi: hujjatlar zanjiri <code>dodaDocSequence</code> (flow.js).</p>
-  </div>
-  <div class="arrow">↓</div>
+<h2 id="doda" class="sec-b">Yo‘l 1: Ru Park Doda kuryer (ketma-ketlik + jadval)</h2>
 
-  <div class="step branch-doda">
-    <div class="step-num">Doda · 5 — hujjatlar (kategoriyaga qarab)</div>
-    <div class="if-box">
-      <div class="label">car + Rossiya mashinasi (vehicleRf = true)</div>
-      Haydovchilik guvohnomasi (VU) → <strong>STS</strong> → pasport (zagran) → …
-    </div>
-    <div class="if-box" style="margin-top:0.5rem;">
-      <div class="label">car + chet el mashina</div>
-      VU → texnik pasport <strong>oldi</strong> → texnik pasport <strong>orqa</strong> → pasport.
-    </div>
-    <div class="if-box" style="margin-top:0.5rem;">
-      <div class="label">truck</div>
-      VU → STS → yuk mashinasi: gabaritlar → yuk ko‘taruvchanlik → yukchilar soni → okleyka → pasport.
-    </div>
-    <div class="if-box" style="margin-top:0.5rem;">
-      <div class="label">bike</div>
-      Samozanyatost’ savoli → agar ha: <strong>INN</strong> → termokorob → pasport; agar yo‘q: termokorob → pasport.
-    </div>
-    <div class="if-box" style="margin-top:0.5rem;">
-      <div class="label">foot yoki moto</div>
-      VU → STS → pasport.
-    </div>
-  </div>
-  <div class="arrow">↓</div>
+<p class="muted">Quyidagi tartib rejada yozilganidek: <strong>transport</strong> → (faqat car: mashina hujjati) → <strong>shahar</strong> → <strong>RF fuqarosi</strong> → <code>dodaDocSequence</code>.</p>
 
-  <div class="step branch-doda">
-    <div class="step-num">Doda · oxirgi</div>
-    <div class="step-title">Review va yuborish</div>
-    <p class="step-out">Pasport yuklangach — tekshiruv ekrani (<code>bk_review</code>), so‘ng arizani yuborish.</p>
-  </div>
+<div class="callout">
+  <p><strong>1.</strong> Transport turi: <code>car</code> · <code>truck</code> · <code>bike</code> · <code>foot</code> · <code>moto</code>.</p>
+  <p><strong>2.</strong> Faqat <strong>legkovoy (car)</strong>: RF avto — STS; chet el — texnik pasport oldi + orqa. Boshqa transport turlarida bu blok yo‘q, to‘g‘ri shaharga o‘tadi.</p>
+  <p><strong>3.</strong> Shahar (<code>bk_G</code>).</p>
+  <p><strong>4.</strong> «Rossiya fuqarosimisiz?» (<code>bk_Z</code>, <code>rfCitizen</code>).</p>
+  <p><strong>5.</strong> Hujjatlar — <code>dodaDocSequence</code> (quyidagi jadval). Pasport tugagach → <code>bk_review</code>.</p>
+</div>
 
-  <hr class="sep"/>
+<table>
+  <thead>
+    <tr>
+      <th><code>categoryKey</code></th>
+      <th>Shart</th>
+      <th>Ketma-ketlik (kalitlar)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>car</strong></td>
+      <td><code>vehicleRf === true</code></td>
+      <td><code>license</code> → <code>sts</code> → <code>passport</code></td>
+    </tr>
+    <tr>
+      <td><strong>car</strong></td>
+      <td><code>vehicleRf === false</code></td>
+      <td><code>license</code> → <code>tech_passport_front</code> → <code>tech_passport_back</code> → <code>passport</code></td>
+    </tr>
+    <tr>
+      <td><strong>truck</strong></td>
+      <td>—</td>
+      <td><code>license</code> → <code>sts</code> → gabaritlar → yuk kg → yukchilar → okleyka → <code>passport</code></td>
+    </tr>
+    <tr>
+      <td><strong>bike</strong></td>
+      <td>samozanyat yo‘q</td>
+      <td><code>self_employed</code> → <code>thermal</code> → <code>passport</code></td>
+    </tr>
+    <tr>
+      <td><strong>bike</strong></td>
+      <td>samozanyat ha</td>
+      <td><code>self_employed</code> → <code>inn</code> → <code>thermal</code> → <code>passport</code></td>
+    </tr>
+    <tr>
+      <td><strong>foot</strong>, <strong>moto</strong></td>
+      <td>—</td>
+      <td><code>license</code> → <code>sts</code> → <code>passport</code></td>
+    </tr>
+  </tbody>
+</table>
 
-  <p class="branch-label lavka">Agar «Yandex Lavka» yoki «Yandex Eats» tanlansa (ikkala servis — bir xil ketma-ketlik)</p>
-  <div class="step branch-lavka">
-    <div class="step-num">Lavka/Eats · 1</div>
-    <div class="step-title">Shahar</div>
-    <p class="step-out">Moskva yoki Sankt-Peterburg. Keyingi ekran: <strong>fuqarolik</strong> guruhi.</p>
-  </div>
-  <div class="arrow">↓</div>
+<p class="muted">Qisqa ma’nolar: <code>license</code> → VU; <code>sts</code> → transport guvohnomasi oldi; yuk mashinasi qatorida — gabaritlar, yuk ko‘taruvchanlik, yukchilar, okleyka.</p>
 
-  <div class="step branch-lavka">
-    <div class="step-num">Lavka/Eats · 2</div>
-    <div class="step-title">Fuqarolik</div>
-    <p class="step-out">Guruh tanlanadi: <strong>O‘zbekiston / Tojikiston</strong>, <strong>Qozog‘iston / Qirg‘iziston</strong>, <strong>RF</strong>, <strong>Turkmaniston</strong>. Keyingi zanjir tanlangan guruhga bog‘liq (pastda).</p>
-  </div>
-  <div class="arrow">↓</div>
+<div class="diagram-wrap">
+<pre class="mermaid">
+%%{init: {"theme": "dark"}}%%
+flowchart LR
+  subgraph car_rf [car_RF_avto]
+    c1[VU] --> c2[STS] --> c3[Zagran_pasport]
+  end
+  subgraph car_fe [car_chet_el]
+    f1[VU] --> f2[Teh_pasport_oldi] --> f3[Teh_pasport_orka] --> f4[Zagran_pasport]
+  end
+  subgraph truck [truck]
+    t1[VU] --> t2[STS] --> t3[Gabaritlar] --> t4[Payload] --> t5[Yukchilar] --> t6[Okleyka] --> t7[Pasport]
+  end
+  subgraph bike_no [bike_samozanyat_yo]
+    b1[Samozanyat] --> b2[Termokorob] --> b3[Pasport]
+  end
+  subgraph bike_yes [bike_samozanyat_ha]
+    b1y[Samozanyat] --> b2y[INN] --> b3y[Termokorob] --> b4y[Pasport]
+  end
+  subgraph fm [foot_moto]
+    m1[VU] --> m2[STS] --> m3[Pasport]
+  end
+</pre>
+</div>
 
-  <p class="branch-label sub">O‘zbekiston yoki Tojikiston — avval «hujjat turi»</p>
-  <div class="step branch-sub">
-    <div class="step-num">UZ/TJ</div>
-    <div class="step-title">Hujjat turi: Patent / VnZh / Student</div>
-    <div class="if-box">
-      <div class="label">Patent tanlansa</div>
-      Pasport (foto sahifa) → patent oldi/orqa → registratsiya <strong>yoki</strong> Amina (reg: 2 rasm; Amina: 1 skrinshot) → migratsion karta → patentning rasmiy sahifasi va oxirgi to‘lov (rasm + fayl) → rekvizit (video + rasm + matn) → 16 raqam → kartaga ulangan telefon → <strong>tugadi</strong>.
-    </div>
-    <div class="if-box" style="margin-top:0.5rem;">
-      <div class="label">VnZh tanlansa</div>
-      VNЖ oldi va orqa → migratsion karta → keyingi qadamlar <strong>RF bilan bir xil oxir</strong>: aloqa telefoni → rekvizit (video + matn + rasm) → 16 raqam → kartaga ulangan telefon → tugadi.
-    </div>
-    <div class="if-box" style="margin-top:0.5rem;">
-      <div class="label">Student tanlansa</div>
-      Student bileti → spravka (o‘qish) → pasport foto sahifasi → registratsiya yoki Amina → migratsion karta → rekvizit → 16 raqam → kartaga ulangan telefon → tugadi.
-    </div>
-  </div>
-  <div class="arrow">↓</div>
+<h2 id="lavka" class="sec-c">Yo‘l 2 va 3: Yandex Lavka va Yandex Eats (bir xil)</h2>
 
-  <p class="branch-label sub">Qozog‘iston yoki Qirg‘iziston</p>
-  <div class="step branch-sub">
-    <div class="step-num">KZ / KG</div>
-    <div class="step-title">Pasport yoki ID</div>
-    <div class="if-box">
-      <div class="label">Pasport</div>
-      Faqat foto ko‘rinadigan sahifa.
-    </div>
-    <div class="if-box" style="margin-top:0.5rem;">
-      <div class="label">ID karta</div>
-      Oldi va orqa suratlari.
-    </div>
-    <p class="step-out" style="margin-top:0.75rem;">Keyin (ikkala yo‘lda ham): migratsion karta → propiska/registratsiya <strong>yoki</strong> Amina (reg: oldi/orqa; Amina: 1 skrinshot) → rekvizit (video + rasm + matn) → 16 raqam → kartaga ulangan telefon → tugadi.</p>
-  </div>
-  <div class="arrow">↓</div>
+<p class="muted">Avval: <strong>shahar</strong> (Moskva yoki SPb) → <strong>fuqarolik</strong> guruhi. Keyin tanlangan guruhdan kelib chiqib quyidagi tarmoqlar ochiladi.</p>
 
-  <p class="branch-label sub">Rossiya fuqaroligi (RF)</p>
-  <div class="step branch-sub">
-    <div class="step-num">RF</div>
-    <div class="step-title">Ketma-ketlik</div>
-    <p class="step-out">Pasport (yuz/foto sahifasi) → pasportdagi propiska sahifasi → <strong>aloqa uchun telefon</strong> → rekvizit (video + matn + rasm) → karta 16 raqami → <strong>kartaga ulangan telefon</strong> → tugadi.</p>
-  </div>
-  <div class="arrow">↓</div>
+<div class="arrow-down">↓</div>
 
-  <p class="branch-label sub">Turkmaniston</p>
-  <div class="step branch-sub">
-    <div class="step-num">TM</div>
-    <div class="step-title">Pasport va viza</div>
-    <p class="step-out">Pasport foto sahifasi → <strong>ish vizasi yoki student vizasi</strong> tanlovi (ikkala turda ham keyin <strong>viza rasmi</strong>) → registratsiya yoki Amina → migratsion karta → aloqa telefoni → rekvizit karta → 16 raqam → kartaga ulangan telefon → tugadi.</p>
-  </div>
+<p class="subhead">Fuqarolik: O‘zbekiston yoki Tojikiston — hujjat turi</p>
+<div class="box">
+  <p><strong>Patent:</strong></p>
+  <ol class="steps">
+    <li>Pasport (foto sahifa)</li>
+    <li>Patent oldi va orqa</li>
+    <li>Registratsiya yoki Amina (reg: 2 rasm; Amina: 1 skrinshot)</li>
+    <li>Migratsion karta</li>
+    <li>Patent: rasmiy sahifa va oxirgi to‘lov (rasm + fayl)</li>
+    <li>Rekvizit (video + rasm + matn) → 16 raqam → kartaga ulangan telefon → tugadi</li>
+  </ol>
+  <p><strong>VnZh:</strong> VNЖ oldi/orqa → migratsion karta → keyin <strong>RF bilan bir xil oxir</strong>: aloqa telefoni → rekvizit → 16 raqam → kartaga ulangan telefon.</p>
+  <p><strong>Student:</strong> Student bileti → spravka → pasport → registratsiya yoki Amina → migratsion karta → rekvizit → 16 raqam → kartaga ulangan telefon.</p>
+</div>
 
+<p class="subhead">Fuqarolik: Qozog‘iston yoki Qirg‘iziston</p>
+<div class="box">
+  <p>Pasport yoki ID tanlovi → pasport: faqat foto sahifa; ID: oldi va orqa → migratsion karta → propiska/registratsiya yoki Amina → rekvizit → 16 raqam → kartaga ulangan telefon.</p>
+</div>
+
+<p class="subhead">Fuqarolik: RF</p>
+<div class="box">
+  <p>Pasport yuz/foto sahifasi → pasportdagi propiska → aloqa telefoni → rekvizit (video + matn + rasm) → 16 raqam → kartaga ulangan telefon.</p>
+</div>
+
+<p class="subhead">Fuqarolik: Turkmaniston</p>
+<div class="box">
+  <p>Pasport foto sahifasi → ish yoki student vizasi tanlovi (ikkala turda ham keyin viza rasmi) → registratsiya yoki Amina → migratsion karta → aloqa telefoni → rekvizit → 16 raqam → kartaga ulangan telefon.</p>
 </div>
 
 <p class="note">
-  <strong>Eslatma:</strong> Lavka va Eats uchun barcha qadamlar bir xil; farq faqat saqlanadigan <code>service_type</code> (lavka / eats) va hisobotda qaysi servis tanlanganligi. Doda kuryer esa alohida modul: transport + (faqat car uchun STS/texnik pasport) + shahar + RF fuqarosi savoli + <code>dodaDocSequence</code>.
+  <strong>Xulosa:</strong> Sahifani tepadan o‘qisangiz: avval hamma uchun 1 va 2.1, keyin uchta <strong>parallel</strong> yo‘l — Doda kuryer alohida; Lavka va Eats bir xil. Pastdagi Mermaid va jadvallar rejadagi bilan mos.
 </p>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: "dark",
+    securityLevel: "loose",
+    flowchart: { curve: "basis", padding: 10, nodeSpacing: 28, rankSpacing: 40 }
+  });
+</script>
 
 </body>
 </html>
