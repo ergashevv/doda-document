@@ -3,215 +3,165 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Doda bot — kod bo‘yicha oqim diagrammasi</title>
+  <title>Botda qanday ketma-ketlik bor?</title>
   <style>
     :root {
       --bg: #1e1e1e;
-      --fg: #d4d4d4;
-      --muted: #858585;
+      --fg: #e8e6e3;
+      --muted: #9ca3af;
       --panel: #252526;
       --border: #3c3c3c;
+      --h2: #7dd3fc;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      padding: 1rem 0.75rem 2.5rem;
+      padding: 1.25rem 0.75rem 2rem;
       font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1.5;
       color: var(--fg);
       background: var(--bg);
     }
-    .page {
-      max-width: 56rem;
-      margin: 0 auto;
-    }
+    .page { max-width: 52rem; margin: 0 auto; }
     h1 {
-      font-size: 1.15rem;
-      font-weight: 600;
-      margin: 0 0 0.35rem;
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
       color: #fff;
     }
-    .meta {
+    .lead {
       color: var(--muted);
-      font-size: 0.88rem;
-      margin: 0 0 1.25rem;
-      max-width: 48rem;
-    }
-    .meta code {
-      background: #2d2d2d;
-      padding: 0.1em 0.35em;
-      border-radius: 4px;
-      font-size: 0.9em;
+      margin: 0 0 1.5rem;
+      font-size: 0.95rem;
+      max-width: 36rem;
     }
     h2 {
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 600;
-      color: #569cd6;
-      margin: 1.75rem 0 0.65rem;
+      color: var(--h2);
+      margin: 1.5rem 0 0.6rem;
       padding-bottom: 0.35rem;
       border-bottom: 1px solid var(--border);
     }
     .diagram {
       background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.75rem;
-      margin: 0 0 1rem;
+      border-radius: 10px;
+      padding: 0.85rem;
+      margin: 0 0 0.5rem;
       overflow-x: auto;
     }
     .diagram .mermaid { text-align: center; }
-    .foot {
-      margin-top: 2rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.82rem;
+    .hint {
+      font-size: 0.85rem;
       color: var(--muted);
+      margin: 0 0 1.25rem;
+      max-width: 40rem;
     }
   </style>
 </head>
 <body>
 <div class="page">
 
-<h1>Doda bot — kod bo‘yicha oqim diagrammasi</h1>
-<p class="meta">
-  Quyidagi chizmalar <strong>haqiqiy kod</strong> asosida: <code>src/bk/handlers.js</code> (holatlar va callbacklar),
-  <code>src/flow.js</code> — <code>dodaDocSequence</code> / <code>getFirstMissingDodaStepSync</code>,
-  <code>src/bk/yandexFlow.js</code> — <code>buildYxLine</code> va <code>getYandexUiState</code>.
-  Ustki yozuvlar o‘zbekcha (tushunarli qisqa nomlar).
-</p>
+<h1>Botda qanday ketma-ketlik bor?</h1>
+<p class="lead">Pastdagi chizmalar — strelkalar bilan: nima keyin nima kelishini ko‘rsatadi. Hech qanday texnik so‘z yo‘q.</p>
 
-<h2>1. Kirish: /start → til → telefon → menyu → xizmat tanlash</h2>
+<h2>1. Boshlash</h2>
 <div class="diagram">
 <pre class="mermaid">
-%%{init: {"theme": "dark", "themeVariables": { "fontSize": "13px" }}}%%
+%%{init: {"theme": "dark", "themeVariables": { "fontSize": "14px" }}}%%
 flowchart TB
-  subgraph entry [Kirish]
-    A([/start]) --> B[session: bk_lang — til tugmalari]
-    B --> C[bk_L:* callback]
-    C --> D[session: bk_phone]
-    D --> E{Telefon qabul qilindi?}
-    E -->|ha| F{afterPhone = service ?}
-    F -->|yoq| G[session: bk_main + salom / video]
-    F -->|ha| H[session: bk_service — uchta xizmat]
-    E -->|yoq / xato| D
-  end
-  subgraph menu [Asosiy menyu — bk_main / bk_yx / bk_yx_review]
-    G --> I{Menyu: Parkda emasman}
-    I -->|telefon yoq| J[bk_phone + afterPhone=service]
-    J --> D
-    I -->|telefon bor| H
-  end
+  A([Botni ochish]) --> B[Tilni tanlaysiz]
+  B --> C[Telefon raqamingizni kiritasiz]
+  C --> D[Salom va menyu chiqadi]
+  D --> E{«Parkda emasman» tugmasi}
+  E -->|telefon yo‘q edi| C
+  E -->|telefon bor| F[Qaysi xizmatda ishlashni tanlaysiz?]
 </pre>
 </div>
 
-<h2>2. Xizmat tanlovi (bk_service) — uchta yo‘l</h2>
+<h2>2. Uchta xizmat — tanlov</h2>
 <div class="diagram">
 <pre class="mermaid">
 %%{init: {"theme": "dark"}}%%
 flowchart TB
-  S[bk_service — «Qaysi xizmat?»] --> D{tanlov}
-  D -->|bk_S:doda| X[session: bk_category — transport]
-  D -->|bk_S:lavka| Y[session: bk_yx — Yandex Lavka]
-  D -->|bk_S:eats| Z[session: bk_yx — Yandex Eda]
-  Y --> YX[Yandex oqimi — pastda]
-  Z --> YX
+  Q[Qaysi xizmat?] --> A[Doda — park kuryeri]
+  Q --> B[Yandex Lavka]
+  Q --> C[Yandex Ovqat]
+  B --> X[Lavka va Ovqat — bir xil tartib]
+  C --> X
 </pre>
 </div>
+<p class="hint">Lavka bilan Ovqatda savollar bir xil; faqat qaysi xizmatni tanlaganingiz yoziladi.</p>
 
-<h2>3. Doda kuryer: kategoriya → shahar → fuqarolik → hujjatlar (flow.js ketma-ketligi)</h2>
+<h2>3. Doda park kuryeri</h2>
+<p class="hint">Avvalo savollar, keyin hujjatlar yuklash.</p>
 <div class="diagram">
 <pre class="mermaid">
 %%{init: {"theme": "dark"}}%%
 flowchart TB
-  subgraph prep [Tayyorgarlik — handlers: bk_C / bk_G / bk_Z]
-    C1[bk_category — transport tanlash] --> C2[bk_city_pick yoki bk_city_text]
-    C2 --> C3[bk_citizenship — fuqarolik tugmalari]
-    C3 --> C4[promptFirstMissingDodaDoc — flow.js zanjiri]
+  subgraph savol [Avval savollar]
+    S1[Qanday transportda ishlaysiz?] --> S2[Qaysi shaharda?]
+    S2 --> S3[Qaysi davlat fuqarosiz?]
   end
+  S3 --> H[Keyingi qadam — transportga qarab]
 </pre>
 </div>
-
-<h2>4. dodaDocSequence — kodda ketma-ketlik (src/flow.js)</h2>
-<p class="meta">Avvalo (agar fuqarolik <code>rf</code>, <code>kz</code> yoki <code>kg</code>): <code>self_employed</code> → agar «ha» bo‘lsa <code>reg_amina</code> → <code>moy_nalog_phone</code>. Keyingi qadamlar transportga qarab (pastdagi 4 ta blok).</p>
-<p class="meta"><strong>Muhim:</strong> <code>handlers.js</code> dagi <code>bk_SE:*</code> (samozanyat javobi) faqat <code>categoryKey</code> ∈ { bike, car, truck } uchun ishlaydi — <code>moto</code> va <code>foot</code> uchun ketma-ketlikda <code>self_employed</code> qolsa, callback mos kelmasligi mumkin (ketma-ketlik va handlerlar nomuvofiqligi).</p>
+<p class="hint">Keyingi chizmada uchta ustun: yengil mashina, moto, velo yoki piyoda — <strong>faqat siz tanlagan transport</strong> bo‘yicha ketma-ketlik ochiladi.</p>
 <div class="diagram">
 <pre class="mermaid">
 %%{init: {"theme": "dark"}}%%
 flowchart TB
-  subgraph ct [Car yoki Truck]
-    A1[SMZ + ixtiyoriy reg/moy_nalog] --> A2[vehicle_rf_pick]
-    A2 -->|RF avto| A3[license → sts]
-    A2 -->|chet el| A4[license → texnik old/orqa]
-    A3 --> T0{yuk mashina?}
-    A4 --> T0
-    T0 -->|ha| T1[truck_dimensions → truck_payload → truck_branding]
-    T0 -->|yoq| P1[pasport old/orqa]
-    T1 --> P1
+  subgraph yengil [Yengil yoki yuk mashina]
+    Y1{Ba’zi davlatlarda: o‘z-o‘zini band qildingizmi?} --> Y2{Mashina Rossiyada ro‘yxatdan o‘tganmi?}
+    Y2 -->|ha| Y3[Haydovchilik guvohnomasi va STS]
+    Y2 -->|yo‘q| Y4[Haydovchilik guvohnomasi va texnik pasport]
+    Y3 --> Y5{Yuk mashinasi?}
+    Y4 --> Y5
+    Y5 -->|ha| Y6[Gabarit, yuk, yuk mashinasi bezashi haqida savollar]
+    Y5 -->|yo‘q| P[Pasport suratlari]
+    Y6 --> P
   end
-  subgraph mt [Moto]
-    M0[SMZ + ixtiyoriy reg/moy_nalog] --> M1[license → pasport old/orqa]
+  subgraph moto [Moto]
+    M1[O‘sha «bandlik» savollari kerak bo‘lsa] --> M2[Haydovchilik guvohnomasi] --> M3[Pasport]
   end
-  subgraph bk [Velosiped]
-    B0[SMZ + ixtiyoriy reg/moy_nalog] --> B1[pasport old/orqa]
-  end
-  subgraph ft [Piyoda]
-    F0[SMZ + ixtiyoriy reg/moy_nalog] --> F1[pasport old/orqa]
+  subgraph velo [Velosiped yoki piyoda]
+    V1[O‘sha «bandlik» savollari kerak bo‘lsa] --> V2[Pasport suratlari]
   end
 </pre>
 </div>
-<p class="meta"><strong>Izoh:</strong> <code>dodaDocSequence</code> bo‘yicha velo/piyoda uchun VU va STS <strong>yo‘q</strong>; moto uchun <strong>vehicle_rf_pick</strong> yo‘q, faqat VU + pasport.</p>
-
-<h2>5. Oxirgi bosqich: Doda tekshiruvi</h2>
 <div class="diagram">
 <pre class="mermaid">
 %%{init: {"theme": "dark"}}%%
 flowchart LR
-  R1[Hujjatlar to‘liq] --> R2[session: bk_review]
-  R2 --> R3[Tasdiqlash / tahrirlash]
+  T1[Hamma hujjat yig‘ildi] --> T2[Ko‘rib chiqasiz va yuborasiz]
 </pre>
 </div>
 
-<h2>6. Yandex Lavka / Eda (yandexFlow.js) — UI ketma-ketligi</h2>
+<h2>4. Lavka va Yandex Ovqat</h2>
 <div class="diagram">
 <pre class="mermaid">
 %%{init: {"theme": "dark"}}%%
 flowchart TB
-  Y0[bk_yx — service lavka/eda] --> Y1{shahar}
-  Y1 -->|msk / msk_obl| Y2[fuqarolik tugmalari]
-  Y1 -->|other| BL[blok — boshqa shahar]
-  Y2 --> Y3{fuqarolik guruhi}
-  Y3 -->|UZ TJ| U1[pasport 1-surat] --> U2[patent / vnzh / student]
-  U2 --> U3[buildYxLine — ketma-ket qadamlar]
-  Y3 -->|KZ KG| K1[pasport yoki ID] --> K2[KZ/KG liniyasi]
-  Y3 -->|RF yoki other| R1[RF pasport liniyasi]
-  Y3 -->|TM| V1{viza turi}
-  V1 -->|turizm| VB[blok]
-  V1 -->|ish / oqish| T1[TM liniyasi]
-  U3 --> DONE[completed_yx to‘liq]
-  K2 --> DONE
-  R1 --> DONE
-  T1 --> DONE
-  DONE --> REV[session: bk_yx_review]
-</pre>
-</div>
-<p class="meta">VNJ qatori kodda: pasportlar → INN → SNILS → migratsiya → (telefon) → rekvizit matn + 16 raqam — <code>lineUzVnzh</code>.</p>
-
-<h2>7. TM: viza turi (kod)</h2>
-<div class="diagram">
-<pre class="mermaid">
-%%{init: {"theme": "dark"}}%%
-flowchart TB
-  V1{tmVisaKind} -->|work| W[lineTmWork: viza → fayl → mig → tel? → rekvizit+16]
-  V1 -->|study| ST[lineTmStudy: viza → talaba hujjatlari → reg/amina → mig → tel? → rekvizit+16]
-  V1 -->|tourism| BL[applyBkYxPayload — blok xabari]
+  L1{Ishlash shahri} -->|Moskva yoki viloyat| L3[Qaysi mamlakatsiz?]
+  L1 -->|boshqa shahar| L2[Hozircha ulanmaydi — qayta tanlash]
+  L3 --> U[O‘zbekiston / Tojikiston: pasport, keyin hujjat turi]
+  L3 --> K[Qozog‘iston / Qirg‘iziston: pasport yoki ID]
+  L3 --> R[Rossiya yoki boshqa davlat: pasport sahifalari]
+  L3 --> T[Turkmaniston: viza haqida savol]
+  T --> T1{Turistik viza?}
+  T1 -->|ha| TB[Bu yo‘l hozircha yopiq]
+  T1 -->|yoq| TW[Suratlar ketma-ket]
+  U --> Z[Bot suratlarni va ma’lumotlarni ketma-ket so‘raydi]
+  K --> Z
+  R --> Z
+  TW --> Z
+  Z --> F[Oxirida ko‘rib chiqish va yuborish]
 </pre>
 </div>
 
-<p class="foot">
-  Diagrammalar brauzerda Mermaid orqali chiziladi. Agar chiziq uzun bo‘lib chiqsa, gorizontal scroll qiling.
-  So‘nggi o‘zgartirishlar: kod bazasi <code>src/flow.js</code> va <code>src/bk/yandexFlow.js</code> bilan solishtiring.
-</p>
+<p class="hint" style="margin-top:1.5rem; opacity:0.75;">Agar yozuv kichik ko‘rinsa, chizma ustida chap-o‘ng siljiting.</p>
 
 </div>
 
@@ -221,7 +171,7 @@ flowchart TB
     startOnLoad: true,
     theme: "dark",
     securityLevel: "loose",
-    flowchart: { curve: "basis", padding: 8, nodeSpacing: 35, rankSpacing: 45 }
+    flowchart: { curve: "basis", padding: 10, nodeSpacing: 32, rankSpacing: 44 }
   });
 </script>
 </body>
