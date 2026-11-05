@@ -38,15 +38,21 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      margin-bottom: 18px;
-      position: sticky;
-      top: 12px;
-      z-index: 20;
-      padding: 10px 12px;
+      margin-bottom: 14px;
+      padding: 8px 2px 0;
+    }
+    .lang-panel {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 18px;
+      padding: 12px 14px;
       border: 1px solid rgba(125, 211, 252, 0.18);
       border-radius: 14px;
       background: rgba(17, 20, 24, 0.82);
       backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     }
     h1 {
       margin: 0;
@@ -118,28 +124,13 @@
       .diagram .mermaid { min-width: 860px; }
     }
 
-    .topbar-float {
-      position: fixed;
-      right: 14px;
-      top: 14px;
-      z-index: 30;
-    }
-
-    .topbar-float .lang-switch {
-      background: rgba(17, 20, 24, 0.9);
-      border: 1px solid rgba(125, 211, 252, 0.16);
-      border-radius: 999px;
-      padding: 8px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-    }
-
     @media (max-width: 560px) {
-      .topbar-float {
-        right: 8px;
-        top: 8px;
+      .lang-panel {
+        align-items: flex-start;
+        flex-direction: column;
       }
-      .topbar-float .lang-switch {
-        padding: 6px;
+      .lang-panel .lang-switch {
+        justify-content: flex-start;
       }
     }
   </style>
@@ -149,10 +140,13 @@
   <div class="topbar">
     <h1 id="pageTitle">Bot oqimi</h1>
   </div>
+  <div class="lang-panel">
+    <div>
+      <strong id="langTitle">Tilni tanlang</strong>
+    </div>
+    <div class="lang-switch" id="langSwitch"></div>
+  </div>
   <div id="content"></div>
-</div>
-<div class="topbar-float">
-  <div class="lang-switch" id="langSwitch"></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
@@ -163,8 +157,9 @@
   const TEXT = {
     uz: {
       pageTitle: "Bot oqimi",
-      langBtnUz: "🇺🇿 O‘zbek",
-      langBtnRu: "🇷🇺 Русский",
+    langBtnUz: "🇺🇿 O‘zbek",
+    langBtnRu: "🇷🇺 Русский",
+      langTitle: "Tilni tanlang",
       pick_language: "Tilni tanlang:",
       main_menu_after_faq: "Asosiy menyu:",
       faq_intro: "Parkdasan — savolni tanla:",
@@ -304,8 +299,9 @@
     },
     ru: {
       pageTitle: "Поток бота",
-      langBtnUz: "🇺🇿 O‘zbek",
-      langBtnRu: "🇷🇺 Русский",
+    langBtnUz: "🇺🇿 O‘zbek",
+    langBtnRu: "🇷🇺 Русский",
+      langTitle: "Выберите язык",
       pick_language: "Выберите язык:",
       main_menu_after_faq: "Главное меню:",
       faq_intro: "Раздел для тех, кто уже в парке Doda taxi — выбери вопрос:",
@@ -829,6 +825,7 @@ flowchart LR
     document.documentElement.lang = lang;
     document.title = TEXT[lang].pageTitle;
     document.getElementById("pageTitle").textContent = TEXT[lang].pageTitle;
+    document.getElementById("langTitle").textContent = TEXT[lang].langTitle;
     renderLangButtons(lang);
     const content = document.getElementById("content");
     content.innerHTML = buildPage(lang);
